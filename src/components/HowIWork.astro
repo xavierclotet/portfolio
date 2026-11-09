@@ -1,0 +1,39 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { howIWorkPath, otherLang, type Lang } from '../i18n/ui.ts';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const page = await getEntry('pages', `${lang}/como-trabajo`);
+if (!page) throw new Error(`Falta src/content/pages/${lang}/como-trabajo.md`);
+const { Content } = await render(page);
+---
+
+<BaseLayout lang={lang} title={page.data.title} description={page.data.summary} altPath={howIWorkPath(otherLang(lang))}>
+  <article>
+    <h1>{page.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .prose :global(h2) {
+    margin-top: var(--space-8);
+    font-size: 1.25rem;
+  }
+
+  .prose :global(li + li) {
+    margin-top: var(--space-2);
+  }
+</style>

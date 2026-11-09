@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../config/site.ts';
-import { LANGS, homePath, otherLang, projectsPath, t, type Lang } from '../i18n/ui.ts';
+import { LANGS, homePath, howIWorkPath, otherLang, projectsPath, t, type Lang } from '../i18n/ui.ts';
 
 interface Props {
   lang: Lang;
@@ -44,6 +44,7 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
         <a class="brand" href={homePath(lang)}>{SITE.name}</a>
         <ul class="nav-links">
           <li><a href={projectsPath(lang)}>{tr('nav.projects')}</a></li>
+          <li><a href={howIWorkPath(lang)}>{tr('nav.howiwork')}</a></li>
           <li><a href={`${homePath(lang)}#contact`}>{tr('nav.contact')}</a></li>
           <li><a href={alternate.pathname} hreflang={other} lang={other}>{LANGS[other]}</a></li>
         </ul>

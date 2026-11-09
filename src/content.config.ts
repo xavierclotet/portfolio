@@ -23,4 +23,10 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+// Páginas de texto con versión por idioma: src/content/pages/<es|en>/<id>.md.
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({ title: z.string(), summary: z.string() }),
+});
+
+export const collections = { projects, pages };

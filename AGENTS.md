@@ -17,11 +17,24 @@ src/
 ├── i18n/ui.ts              textos de la interfaz (es/en) y rutas por idioma
 ├── content.config.ts       esquema de la colección `projects`
 ├── content/projects/<es|en>/<slug>.md   un caso de estudio por idioma, mismo slug
+├── content/pages/<es|en>/como-trabajo.md página «Cómo trabajo con IA»
+├── data/home.ts            «Ahora mismo», skills por área (enlazan al proyecto si está publicado) y experiencia
 ├── lib/projects.ts         lectura de proyectos (filtra borradores fuera de desarrollo)
-├── components/             Home, ProjectCard, ProjectArticle
+├── components/             Home, ProjectCard, ProjectArticle, HowIWork
 ├── layouts/BaseLayout.astro head, SEO, hreflang, cabecera y pie
-└── pages/                  `/`, `/en/`, `/proyectos/<slug>/`, `/en/projects/<slug>/`, 404
+└── pages/                  `/`, `/en/`, `/proyectos/<slug>/`, `/en/projects/<slug>/`, `/como-trabajo/`, `/en/how-i-work/`, 404
 ```
+
+## Posicionamiento (acordado con Xavi)
+
+- Titular: «Ingeniero frontend senior que construye producto con IA». Público: startups y scale-ups de
+  producto, España o remoto UE, puesto de senior IC.
+- Mensaje principal: lleva IA a producción con criterio (coste, permisos, fallos, evals); de apoyo, el
+  desarrollo con agentes y el oficio de frontend.
+- Primera persona, frases cortas, cada afirmación con un ejemplo concreto. Sin palabras de moda.
+- Orden de proyectos: Scorekinole, Gospel Vallès, coach vocal, hipotecas. El trabajo de empresa solo como
+  una línea de experiencia, sin nombre de empresa ni detalles.
+- Sin foto ni blog hasta tener el primer artículo.
 
 ## Reglas
 

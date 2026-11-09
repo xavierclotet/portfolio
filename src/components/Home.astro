@@ -2,8 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from './ProjectCard.astro';
 import { SITE } from '../config/site.ts';
-import { PROJECTS_SEGMENT, t, type Lang } from '../i18n/ui.ts';
-import { getProjects } from '../lib/projects.ts';
+import { HOME } from '../data/home.ts';
+import { PROJECTS_SEGMENT, howIWorkPath, projectPath, t, type Lang } from '../i18n/ui.ts';
+import { getProjects, slugOf } from '../lib/projects.ts';
 
 interface Props {
   lang: Lang;
@@ -11,7 +12,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const tr = t(lang);
+const data = HOME[lang];
 const projects = await getProjects(lang);
+const published = new Set(projects.map(slugOf));
 const contacts = [
   { label: 'GitHub', href: SITE.github },
   { label: 'LinkedIn', href: SITE.linkedin },
@@ -25,12 +28,53 @@ const contacts = [
     <p class="lead muted">{tr('hero.lead')}</p>
   </section>
 
-  <section id={PROJECTS_SEGMENT[lang]} aria-labelledby="projects-title">
-    <h2 id="projects-title">{tr('projects.title')}</h2>
-    <p class="muted">{tr('projects.lead')}</p>
-    <div class="grid">
-      {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+  {projects.length > 0 && (
+    <section id={PROJECTS_SEGMENT[lang]} aria-labelledby="projects-title">
+      <h2 id="projects-title">{tr('projects.title')}</h2>
+      <p class="muted">{tr('projects.lead')}</p>
+      <div class="grid">
+        {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+      </div>
+    </section>
+  )}
+
+  <section aria-labelledby="howiwork-title">
+    <h2 id="howiwork-title">{tr('howiwork.title')}</h2>
+    <p class="muted">{tr('howiwork.lead')}</p>
+    <p><a class="more" href={howIWorkPath(lang)}>{tr('howiwork.more')} →</a></p>
+  </section>
+
+  <section aria-labelledby="now-title">
+    <h2 id="now-title">{tr('now.title')}</h2>
+    <ul class="list">
+      {data.now.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section aria-labelledby="skills-title">
+    <h2 id="skills-title">{tr('skills.title')}</h2>
+    <p class="muted">{tr('skills.lead')}</p>
+    <div class="skills">
+      {data.skills.map((group) => (
+        <div>
+          <h3>{group.title}</h3>
+          <ul class="tags">
+            {group.items.map((skill) => (
+              <li>
+                {skill.project && published.has(skill.project)
+                  ? <a href={projectPath(lang, skill.project)}>{skill.label}</a>
+                  : skill.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
+  </section>
+
+  <section aria-labelledby="experience-title">
+    <h2 id="experience-title">{tr('experience.title')}</h2>
+    <p class="muted">{data.experience}</p>
   </section>
 
   <section id="contact" aria-labelledby="contact-title">
@@ -67,6 +111,42 @@ const contacts = [
     .grid {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
+
+  .more {
+    display: inline-block;
+    min-height: 2.75rem;
+    line-height: 2.75rem;
+  }
+
+  .list {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  .list li + li {
+    margin-top: var(--space-2);
+  }
+
+  .skills {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 40rem) {
+    .skills {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .skills h3 {
+    margin: 0 0 var(--space-3);
+    font-size: 1rem;
+  }
+
+  /* Las skills con proyecto son enlaces: color de acento para que se note sin hover. */
+  .skills .tags li:has(a) {
+    border-color: var(--accent);
   }
 
   .contacts {

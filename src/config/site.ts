@@ -3,7 +3,6 @@ export const SITE = {
   url: 'https://xavierclotet.pages.dev',
   name: 'Xavi Clotet',
   github: 'https://github.com/xavierclotet',
-  // TODO: rellenar antes de publicar (nunca el correo del trabajo).
-  linkedin: '',
-  email: '',
+  linkedin: 'https://www.linkedin.com/in/xaviclotet/',
+  email: 'xaviterra11@gmail.com',
 } as const;

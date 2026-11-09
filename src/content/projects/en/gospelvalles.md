@@ -7,7 +7,7 @@ ai: [LLM in production, Agentic development, RAG (design)]
 links:
   demo: https://gospelvalles.pages.dev
 privateCode: true
-order: 3
+order: 2
 ---
 
 ## Context

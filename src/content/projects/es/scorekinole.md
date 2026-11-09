@@ -6,7 +6,7 @@ stack: [SvelteKit, Svelte 5, TypeScript, Firebase, Cloud Functions, Stripe, Vite
 ai: [WebMCP (contexto para agentes), Desarrollo con agentes]
 links:
   demo: https://scorekinole.es
-order: 2
+order: 1
 ---
 
 ## Contexto

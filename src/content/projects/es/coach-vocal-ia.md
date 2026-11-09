@@ -6,7 +6,7 @@ stack: [TypeScript, Supabase Edge Functions, OpenRouter, Gemini, Postgres]
 ai: [LLM multimodal (audio), Salida estructurada, Control de costes, Selección de modelos]
 privateCode: true
 featured: true
-order: 1
+order: 3
 ---
 
 ## Contexto
