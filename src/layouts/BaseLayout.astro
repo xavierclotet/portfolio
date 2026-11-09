@@ -1,0 +1,105 @@
+---
+import '../styles/global.css';
+import { SITE } from '../config/site.ts';
+import { LANGS, homePath, otherLang, projectsPath, t, type Lang } from '../i18n/ui.ts';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Ruta equivalente en el otro idioma (por defecto, su inicio). */
+  altPath?: string;
+}
+
+const { lang, title, description, altPath } = Astro.props;
+const tr = t(lang);
+const other = otherLang(lang);
+const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
+const desc = description ?? tr('meta.description');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const alternate = new URL(altPath ?? homePath(other), Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang={other} href={alternate} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{tr('nav.skip')}</a>
+    <header class="site-header">
+      <nav class="container nav" aria-label={lang === 'es' ? 'Principal' : 'Main'}>
+        <a class="brand" href={homePath(lang)}>{SITE.name}</a>
+        <ul class="nav-links">
+          <li><a href={projectsPath(lang)}>{tr('nav.projects')}</a></li>
+          <li><a href={`${homePath(lang)}#contact`}>{tr('nav.contact')}</a></li>
+          <li><a href={alternate.pathname} hreflang={other} lang={other}>{LANGS[other]}</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main" class="container">
+      <slot />
+    </main>
+    <footer class="container site-footer muted">
+      <p>© {new Date().getFullYear()} {SITE.name}</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    padding-block: var(--space-3);
+  }
+
+  .brand {
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: inline-block;
+    min-height: 2.75rem;
+    padding-block: var(--space-2);
+    line-height: 1.75rem;
+  }
+
+  main {
+    padding-block: var(--space-8) var(--space-12);
+  }
+
+  .site-footer {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { otherLang, projectPath, projectsPath, t, type Lang } from '../i18n/ui.ts';
+import { slugOf, type Project } from '../lib/projects.ts';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const tr = t(lang);
+const { title, summary, role, stack, ai, links, privateCode } = project.data;
+const { Content } = await render(project);
+---
+
+<BaseLayout lang={lang} title={title} description={summary} altPath={projectPath(otherLang(lang), slugOf(project))}>
+  <article>
+    <p><a href={projectsPath(lang)}>← {tr('project.back')}</a></p>
+    <header class="head">
+      <h1>{title}</h1>
+      <p class="lead">{summary}</p>
+      <p class="muted">{role}</p>
+      {ai.length > 0 && <ul class="tags">{ai.map((tag) => <li>{tag}</li>)}</ul>}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <aside class="facts">
+      <h2>{tr('project.stack')}</h2>
+      <ul class="tags">{stack.map((s) => <li>{s}</li>)}</ul>
+      <h2>{tr('project.links')}</h2>
+      <ul class="links">
+        {links.demo && <li><a href={links.demo}>{tr('project.demo')}</a></li>}
+        {links.repo && <li><a href={links.repo}>{tr('project.repo')}</a></li>}
+      </ul>
+      {privateCode && <p class="muted">{tr('project.private')}</p>}
+    </aside>
+  </article>
+</BaseLayout>
+
+<style>
+  .head h1 {
+    margin: var(--space-4) 0 var(--space-3);
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .lead {
+    margin: 0 0 var(--space-2);
+    font-size: 1.125rem;
+  }
+
+  .head .tags {
+    margin-top: var(--space-3);
+  }
+
+  .prose {
+    margin-top: var(--space-8);
+  }
+
+  .prose :global(h2) {
+    margin-top: var(--space-8);
+    font-size: 1.25rem;
+  }
+
+  .prose :global(li + li) {
+    margin-top: var(--space-1);
+  }
+
+  .facts {
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+
+  .facts h2 {
+    margin: var(--space-6) 0 var(--space-3);
+    font-size: 1rem;
+  }
+
+  .facts h2:first-child {
+    margin-top: 0;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links a {
+    display: inline-block;
+    min-height: 2.75rem;
+    line-height: 2.75rem;
+  }
+</style>

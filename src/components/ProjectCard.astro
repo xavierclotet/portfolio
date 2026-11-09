@@ -1,0 +1,70 @@
+---
+import { projectPath, t, type Lang } from '../i18n/ui.ts';
+import { slugOf, type Project } from '../lib/projects.ts';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const tr = t(lang);
+const { title, summary, ai, draft } = project.data;
+---
+
+<article class="card">
+  <h3>
+    <a href={projectPath(lang, slugOf(project))}>{title}</a>
+    {draft && <span class="draft">{tr('project.draft')}</span>}
+  </h3>
+  <p>{summary}</p>
+  {ai.length > 0 && (
+    <ul class="tags">
+      {ai.map((tag) => <li>{tag}</li>)}
+    </ul>
+  )}
+</article>
+
+<style>
+  .card {
+    position: relative;
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .card:focus-within,
+  .card:hover {
+    border-color: var(--accent);
+  }
+
+  h3 {
+    margin: 0 0 var(--space-2);
+    font-size: 1.125rem;
+  }
+
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* Toda la tarjeta es clicable, con el enlace del título como único destino. */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card p {
+    margin: 0 0 var(--space-3);
+    color: var(--muted);
+  }
+
+  .draft {
+    margin-inline-start: var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+</style>

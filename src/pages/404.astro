@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../i18n/ui.ts';
+
+const tr = t('es');
+---
+
+<BaseLayout lang="es" title={tr('notfound.title')}>
+  <h1>{tr('notfound.title')}</h1>
+  <p><a href="/">{tr('notfound.back')}</a></p>
+</BaseLayout>
