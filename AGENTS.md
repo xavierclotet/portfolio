@@ -65,8 +65,10 @@ regeneran con `powershell -ExecutionPolicy Bypass -File .agents/link-skills.ps1`
 - **Nunca** añadas `Co-authored-by:` ni otros co-autores a los commits.
 - Autor de los commits: `xavierclotet@users.noreply.github.com` (config local del repo; el global es el del
   trabajo y no debe salir en un repo público).
-- Deploy: **Cloudflare Pages conectado al repo** (cuenta personal de Cloudflare, plan gratuito). Cada push a
-  `main` publica. Build `npm run build`, salida `dist/`, Node 22 (`.node-version`).
+- Deploy: **Cloudflare Pages, manual** (proyecto `xavierclotet` en la cuenta personal, plan gratuito) →
+  https://xavierclotet.pages.dev. `npm run deploy` (verify + `wrangler pages deploy dist`); para revisar sin
+  tocar producción, `npm run deploy:preview` → https://proves.xavierclotet.pages.dev. No hay auto-deploy por
+  push. Wrangler usa la cuenta de `CLOUDFLARE_ACCOUNT_ID` en `.env` (hay dos cuentas). Detalle: `doc/deploy.md`.
 
 ## Desarrollo
 
