@@ -3,20 +3,22 @@
 @import '@fontsource/overpass/latin-400.css';
 @import '@fontsource/overpass/latin-700.css';
 
+/* Claro y oscuro con light-dark(): el sistema decide por defecto y el botón de la cabecera fija
+   `data-theme` en <html> (se guarda en localStorage). */
 :root {
   color-scheme: light dark;
-  --ground: oklch(96% 0.004 250);
-  --panel: oklch(99.5% 0.002 250);
-  --ink: oklch(21% 0.02 262);
-  --ink-2: oklch(43% 0.02 262);
-  --rule: oklch(86% 0.008 262);
-  --band: var(--ink);
-  --on-band: var(--ground);
-  --l1: oklch(52% 0.2 27);
-  --l2: oklch(46% 0.17 320);
-  --l3: oklch(50% 0.14 150);
-  --l4: oklch(50% 0.15 250);
-  --on-line: oklch(100% 0 0);
+  --ground: light-dark(oklch(96% 0.004 250), oklch(17% 0.012 262));
+  --panel: light-dark(oklch(99.5% 0.002 250), oklch(21% 0.014 262));
+  --ink: light-dark(oklch(21% 0.02 262), oklch(95% 0.005 262));
+  --ink-2: light-dark(oklch(43% 0.02 262), oklch(75% 0.012 262));
+  --rule: light-dark(oklch(86% 0.008 262), oklch(33% 0.012 262));
+  --band: light-dark(oklch(21% 0.02 262), oklch(24% 0.016 262));
+  --on-band: light-dark(oklch(96% 0.004 250), oklch(95% 0.005 262));
+  --l1: light-dark(oklch(52% 0.2 27), oklch(70% 0.17 27));
+  --l2: light-dark(oklch(46% 0.17 320), oklch(70% 0.14 320));
+  --l3: light-dark(oklch(50% 0.14 150), oklch(74% 0.15 150));
+  --l4: light-dark(oklch(50% 0.15 250), oklch(72% 0.13 245));
+  --on-line: light-dark(oklch(100% 0 0), oklch(17% 0.012 262));
   /* Línea por defecto (páginas sin proyecto): la tinta. */
   --line: var(--ink);
   --track: 0.5rem;
@@ -35,23 +37,13 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ground: oklch(17% 0.012 262);
-    --panel: oklch(21% 0.014 262);
-    --ink: oklch(95% 0.005 262);
-    --ink-2: oklch(75% 0.012 262);
-    --rule: oklch(33% 0.012 262);
-    --band: oklch(24% 0.016 262);
-    --on-band: var(--ink);
-    --l1: oklch(70% 0.17 27);
-    --l2: oklch(70% 0.14 320);
-    --l3: oklch(74% 0.15 150);
-    --l4: oklch(72% 0.13 245);
-    --on-line: oklch(17% 0.012 262);
-  }
+:root[data-theme='light'] {
+  color-scheme: light;
 }
 
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
 .line-1 { --line: var(--l1); }
 .line-2 { --line: var(--l2); }
 .line-3 { --line: var(--l3); }

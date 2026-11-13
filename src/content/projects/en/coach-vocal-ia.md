@@ -5,6 +5,7 @@ role: End-to-end design and development · in production (beta) inside Gospel Va
 stack: [TypeScript, Supabase Edge Functions, OpenRouter, Gemini, Postgres]
 ai: [Multimodal LLM (audio), Structured output, Cost control, Model selection]
 privateCode: true
+access: Private, inside the Gospel Vallès panel
 featured: true
 order: 3
 ---

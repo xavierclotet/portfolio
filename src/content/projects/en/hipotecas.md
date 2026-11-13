@@ -5,6 +5,7 @@ role: Personal project · design and development
 stack: [Node.js, JavaScript, HTML, CSS]
 ai: [Agentic development]
 privateCode: true
+access: Personal tool, not published
 order: 4
 ---
 

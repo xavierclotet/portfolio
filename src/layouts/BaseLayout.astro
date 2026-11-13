@@ -42,12 +42,28 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <script is:inline>
+      // Antes de pintar: el tema guardado por el botón; sin él, el del sistema.
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
   </head>
   <body class:list={[line && `line-${line}`]}>
     <a class="skip-link" href="#main">{tr('nav.skip')}</a>
     <header class:list={['band', { 'has-line': line }]}>
       <nav class:list={['container', 'nav', { wide }]} aria-label={lang === 'es' ? 'Principal' : 'Main'}>
         <a class="brand" href={homePath(lang)}>{SITE.name}</a>
+        <button class="theme" type="button" data-theme-toggle data-label-dark={tr('theme.dark')} data-label-light={tr('theme.light')} aria-label={tr('theme.dark')}>
+          <svg class="moon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+            <path d="M16.5 12.2A7 7 0 0 1 7.8 3.5a7 7 0 1 0 8.7 8.7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          </svg>
+          <svg class="sun" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+            <circle cx="10" cy="10" r="3.5" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M10 1.5v2.5M10 16v2.5M1.5 10H4M16 10h2.5M4 4l1.8 1.8M14.2 14.2 16 16M4 16l1.8-1.8M14.2 5.8 16 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
         <ul class="nav-links">
           <li><a href={projectsPath(lang)} aria-current={current === 'projects' ? 'true' : undefined}>{tr('nav.projects')}</a></li>
           <li><a href={howIWorkPath(lang)} aria-current={current === 'howiwork' ? 'page' : undefined}>{tr('nav.howiwork')}</a></li>
@@ -62,6 +78,26 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     <footer class:list={['container', 'site-footer', { wide }]}>
       <p>© {new Date().getFullYear()} {SITE.name}</p>
     </footer>
+    <script>
+      const root = document.documentElement;
+      const system = window.matchMedia('(prefers-color-scheme: dark)');
+      const current = () => root.dataset.theme ?? (system.matches ? 'dark' : 'light');
+      for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+        const label = () => {
+          button.ariaLabel = current() === 'dark' ? (button.dataset.labelLight ?? '') : (button.dataset.labelDark ?? '');
+        };
+        label();
+        system.addEventListener('change', label);
+        button.addEventListener('click', () => {
+          const next = current() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {}
+          label();
+        });
+      }
+    </script>
   </body>
 </html>
 
@@ -115,9 +151,11 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     letter-spacing: -0.01em;
   }
 
+  /* Móvil: nombre y botón de tema arriba, enlaces debajo. Escritorio: todo en una fila. */
   .nav-links {
     display: flex;
     flex-wrap: wrap;
+    flex-basis: 100%;
     column-gap: var(--space-4);
     margin: 0 0 0 calc(-1 * var(--space-1));
     padding: 0;
@@ -127,13 +165,67 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
 
   @media (min-width: 40rem) {
     .nav-links {
+      flex-basis: auto;
+      order: 1;
       column-gap: var(--space-6);
-      margin: 0;
+      margin: 0 0 0 auto;
+    }
+
+    .theme {
+      order: 2;
     }
   }
 
   .lang {
     font-weight: 700;
+  }
+
+  .nav-links li {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Botón de tema: muestra el destino (luna en claro, sol en oscuro). */
+  .theme {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-inline: var(--space-2) calc(-1 * var(--space-3));
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .theme:hover {
+    background: color-mix(in oklch, var(--on-band) 14%, transparent);
+  }
+
+  .theme:focus-visible {
+    outline: 3px solid var(--on-band);
+    outline-offset: -3px;
+  }
+
+  .theme .sun,
+  :global([data-theme='dark']) .theme .moon {
+    display: none;
+  }
+
+  :global([data-theme='dark']) .theme .sun {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme .moon {
+      display: none;
+    }
+
+    :global(:root:not([data-theme='light'])) .theme .sun {
+      display: block;
+    }
   }
 
   main {

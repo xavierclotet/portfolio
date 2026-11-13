@@ -5,7 +5,7 @@ role: Personal project for a choir · design, development and operations
 stack: [Astro, TypeScript, Supabase, Postgres (RLS), Edge Functions, pg_cron, Cloudflare Pages, Playwright]
 ai: [LLM in production, Agentic development, RAG (design)]
 links:
-  demo: https://gospelvalles.pages.dev
+  demo: https://gospelvalles.com
 privateCode: true
 order: 2
 ---

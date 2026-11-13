@@ -261,6 +261,7 @@ Placa de señal: sólida, recta y en tinta.
 - **Banda de estación:** cabecera a lo ancho en tinta (en oscuro, la banda oscura) con el texto en el color del fondo. Marca a la izquierda (700, 1.125rem) y enlaces a la derecha en 0.9375rem; cada enlace mide 2.75rem de alto.
 - **Estados:** hover y página actual (`aria-current`) con subrayado de 3px; el foco usa el color del texto de la banda.
 - **En un caso:** la banda lleva debajo una franja de 0.375rem del color de la línea.
+- **Tema:** botón redondo de 2.75rem al final de la banda (en móvil, junto al nombre) con un icono SVG del tema de destino (luna en claro, sol en oscuro). Por defecto manda el sistema; el botón fija `data-theme` en `<html>` y lo guarda en `localStorage`. Los tokens usan `light-dark()`.
 - **Móvil:** los enlaces bajan a una segunda fila con 1rem de separación.
 
 ### Placa de línea

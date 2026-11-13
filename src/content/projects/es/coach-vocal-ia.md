@@ -5,6 +5,7 @@ role: Diseño y desarrollo completo · en producción (beta) dentro de Gospel Va
 stack: [TypeScript, Supabase Edge Functions, OpenRouter, Gemini, Postgres]
 ai: [LLM multimodal (audio), Salida estructurada, Control de costes, Selección de modelos]
 privateCode: true
+access: Privado, dentro del panel de Gospel Vallès
 featured: true
 order: 3
 ---

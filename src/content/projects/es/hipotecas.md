@@ -5,6 +5,7 @@ role: Proyecto personal · diseño y desarrollo
 stack: [Node.js, JavaScript, HTML, CSS]
 ai: [Desarrollo con agentes]
 privateCode: true
+access: Herramienta personal, sin publicar
 order: 4
 ---
 

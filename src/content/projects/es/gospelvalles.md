@@ -5,7 +5,7 @@ role: Proyecto propio para un coro · diseño, desarrollo y operación
 stack: [Astro, TypeScript, Supabase, Postgres (RLS), Edge Functions, pg_cron, Cloudflare Pages, Playwright]
 ai: [LLM en producción, Desarrollo con agentes, RAG (diseño)]
 links:
-  demo: https://gospelvalles.pages.dev
+  demo: https://gospelvalles.com
 privateCode: true
 order: 2
 ---

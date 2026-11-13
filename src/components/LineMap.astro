@@ -37,6 +37,9 @@ const cols = columnsOf(lines);
             </h3>
             {line.project.data.draft && <p class="draft">{tr('project.draft')}</p>}
             <p>{line.project.data.summary}</p>
+            {line.project.data.links.demo
+              ? <a class="site" href={line.project.data.links.demo} target="_blank" rel="noopener">{new URL(line.project.data.links.demo).hostname}<span class="sr-only"> ({tr('link.newtab')})</span><Arrow /></a>
+              : line.project.data.access && <p class="access">{line.project.data.access}</p>}
           </div>
         </div>
         <details class="stops-wrap" open>
@@ -241,6 +244,25 @@ const cols = columnsOf(lines);
     border: 1px solid var(--ink-2);
     border-radius: 0.25rem;
     font-size: 0.75rem;
+  }
+
+  .head .site {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 2.75rem;
+    margin: var(--space-1) 0 -0.5rem;
+    padding: 0;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 2px;
+  }
+
+  .head .access {
+    margin-top: var(--space-3);
+    font-size: 0.875rem;
   }
 
   /* Móvil: tira vertical, como el diagrama de encima de las puertas. */
