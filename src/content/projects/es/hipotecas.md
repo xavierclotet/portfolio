@@ -4,6 +4,7 @@ summary: "Herramienta personal para comprar vivienda con datos: TAE real de cada
 role: Proyecto personal · diseño y desarrollo
 stack: [Node.js, JavaScript, HTML, CSS]
 ai: [Desarrollo con agentes]
+decisions: [Node sin dependencias, Sin dato no se inventa, Precio medio del barrio]
 privateCode: true
 access: Herramienta personal, sin publicar
 order: 4

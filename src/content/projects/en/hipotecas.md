@@ -4,6 +4,7 @@ summary: "A personal tool to buy a home with data: the real APR of each offer an
 role: Personal project · design and development
 stack: [Node.js, JavaScript, HTML, CSS]
 ai: [Agentic development]
+decisions: [Node with no dependencies, Missing data is never invented, Neighbourhood average price]
 privateCode: true
 access: Personal tool, not published
 order: 4

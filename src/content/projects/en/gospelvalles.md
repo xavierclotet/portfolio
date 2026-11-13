@@ -4,6 +4,7 @@ summary: Public website and management panel for a choir, with role-based permis
 role: Personal project for a choir · design, development and operations
 stack: [Astro, TypeScript, Supabase, Postgres (RLS), Edge Functions, pg_cron, Cloudflare Pages, Playwright]
 ai: [LLM in production, Agentic development, RAG (design)]
+decisions: [Permissions in Postgres (RLS), Abuse limits, e2e per role]
 links:
   demo: https://gospelvalles.com
 privateCode: true

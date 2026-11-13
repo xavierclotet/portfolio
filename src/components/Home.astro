@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Arrow from './Arrow.astro';
+import Contact from './Contact.astro';
 import LineMap from './LineMap.astro';
 import { SITE } from '../config/site.ts';
 import { HOME } from '../data/home.ts';
@@ -16,12 +17,7 @@ const { lang } = Astro.props;
 const tr = t(lang);
 const data = HOME[lang];
 const lines = buildLines(await getProjects(lang));
-const contacts = [
-  { label: SITE.email, href: SITE.email && `mailto:${SITE.email}`, main: true },
-  { label: 'LinkedIn', href: SITE.linkedin, main: false },
-  { label: 'GitHub', href: SITE.github, main: false },
-].filter((c) => c.href);
-const mail = contacts.find((c) => c.main);
+const mail = SITE.email && `mailto:${SITE.email}`;
 ---
 
 <BaseLayout lang={lang} wide>
@@ -30,7 +26,7 @@ const mail = contacts.find((c) => c.main);
     <div class="pitch">
       <p class="lead">{tr('hero.lead')}</p>
       <p class="actions">
-        {mail && <a class="sign" href={mail.href}>{tr('hero.write')} <Arrow /></a>}
+        {mail && <a class="sign" href={mail}>{tr('hero.write')} <Arrow /></a>}
         {lines.length > 0 && <a class="go" href={projectsPath(lang)}>{tr('hero.projects')}</a>}
       </p>
     </div>
@@ -79,7 +75,8 @@ const mail = contacts.find((c) => c.main);
                   {n && skill.project
                     ? <a href={projectPath(lang, skill.project)}>
                         <span>{skill.label}</span>
-                        <span class="plaque small" aria-label={`${tr('map.line.name')} ${n}`}>L{n}</span>
+                        <span class="plaque small" title={lines.find((l) => l.n === n)?.project.data.title} aria-hidden="true">L{n}</span>
+                        <span class="sr-only">({lines.find((l) => l.n === n)?.project.data.title})</span>
                       </a>
                     : <span>{skill.label}</span>}
                 </li>
@@ -93,18 +90,14 @@ const mail = contacts.find((c) => c.main);
 
   <section class="block split" aria-labelledby="experience-title">
     <h2 id="experience-title">{tr('experience.title')}</h2>
-    <p>{data.experience}</p>
+    <ol class="timeline">
+      {data.experience.map((row) => (
+        <li><span class="when">{row.when}</span><span>{row.what}</span></li>
+      ))}
+    </ol>
   </section>
 
-  <section id="contact" class="terminus" aria-labelledby="contact-title">
-    <h2 id="contact-title">{tr('contact.title')}</h2>
-    <p class="lead">{tr('contact.lead')}</p>
-    <ul>
-      {contacts.map((c) => (
-        <li><a class:list={{ main: c.main }} href={c.href} rel="me">{c.label} <Arrow /></a></li>
-      ))}
-    </ul>
-  </section>
+  <Contact lang={lang} />
 </BaseLayout>
 
 <style>
@@ -313,39 +306,27 @@ const mail = contacts.find((c) => c.main);
     text-decoration-thickness: 2px;
   }
 
-  /* Final de línea: el contacto cierra la página. */
-  .terminus {
-    margin-top: var(--space-16);
-    padding-top: var(--space-8);
-    border-top: 0.5rem solid var(--ink);
-  }
-
-  .terminus h2 {
-    font-size: clamp(2rem, 6vw, 3.25rem);
-    letter-spacing: -0.025em;
-  }
-
-  .terminus ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-8);
-    margin: var(--space-8) 0 0;
+  /* Experiencia: recorrido con año y parada. */
+  .timeline {
+    margin: 0;
     padding: 0;
     list-style: none;
+    max-width: 38rem;
   }
 
-  .terminus a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-height: 2.75rem;
+  .timeline li {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: var(--space-4);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .timeline li:first-child {
+    padding-top: 0;
+  }
+
+  .when {
     font-weight: 700;
-    font-size: 1.125rem;
-  }
-
-  .terminus a.main {
-    font-size: clamp(1.25rem, 4.5vw, 1.75rem);
-    overflow-wrap: anywhere;
-  }
-</style>
+  }</style>
 

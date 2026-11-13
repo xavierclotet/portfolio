@@ -55,6 +55,12 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     <header class:list={['band', { 'has-line': line }]}>
       <nav class:list={['container', 'nav', { wide }]} aria-label={lang === 'es' ? 'Principal' : 'Main'}>
         <a class="brand" href={homePath(lang)}>{SITE.name}</a>
+        <ul class="nav-links">
+          <li><a href={projectsPath(lang)} aria-current={current === 'projects' ? 'true' : undefined}>{tr('nav.projects')}</a></li>
+          <li><a href={howIWorkPath(lang)} aria-current={current === 'howiwork' ? 'page' : undefined}>{tr('nav.howiwork')}</a></li>
+          <li><a href={`${homePath(lang)}#contact`}>{tr('nav.contact')}</a></li>
+          <li><a class="lang" href={alternate.pathname} hreflang={other} lang={other}>{LANGS[other]}</a></li>
+        </ul>
         <button class="theme" type="button" data-theme-toggle data-label-dark={tr('theme.dark')} data-label-light={tr('theme.light')} aria-label={tr('theme.dark')}>
           <svg class="moon" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
             <path d="M16.5 12.2A7 7 0 0 1 7.8 3.5a7 7 0 1 0 8.7 8.7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
@@ -64,19 +70,18 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
             <path d="M10 1.5v2.5M10 16v2.5M1.5 10H4M16 10h2.5M4 4l1.8 1.8M14.2 14.2 16 16M4 16l1.8-1.8M14.2 5.8 16 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
-        <ul class="nav-links">
-          <li><a href={projectsPath(lang)} aria-current={current === 'projects' ? 'true' : undefined}>{tr('nav.projects')}</a></li>
-          <li><a href={howIWorkPath(lang)} aria-current={current === 'howiwork' ? 'page' : undefined}>{tr('nav.howiwork')}</a></li>
-          <li><a href={`${homePath(lang)}#contact`}>{tr('nav.contact')}</a></li>
-          <li><a class="lang" href={alternate.pathname} hreflang={other} lang={other}>{LANGS[other]}</a></li>
-        </ul>
       </nav>
     </header>
     <main id="main" class:list={['container', { wide }]}>
       <slot />
     </main>
     <footer class:list={['container', 'site-footer', { wide }]}>
-      <p>© {new Date().getFullYear()} {SITE.name}</p>
+      <p>
+        <span>© {new Date().getFullYear()} {SITE.name}</span>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a href={SITE.linkedin} rel="me">LinkedIn</a>
+        <a href={SITE.github} rel="me">GitHub</a>
+      </p>
     </footer>
     <script>
       const root = document.documentElement;
@@ -163,16 +168,27 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     font-size: 0.9375rem;
   }
 
+  /* Móvil: el botón de tema sube junto al nombre (solo cambia la posición visual en esta anchura). */
+  .theme {
+    order: 1;
+    margin-inline-start: auto;
+  }
+
+  .nav-links {
+    order: 2;
+  }
+
   @media (min-width: 40rem) {
     .nav-links {
       flex-basis: auto;
-      order: 1;
+      order: 0;
       column-gap: var(--space-6);
       margin: 0 0 0 auto;
     }
 
     .theme {
-      order: 2;
+      order: 0;
+      margin-inline-start: var(--space-2);
     }
   }
 
@@ -191,7 +207,7 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     place-items: center;
     width: 2.75rem;
     height: 2.75rem;
-    margin-inline: var(--space-2) calc(-1 * var(--space-3));
+    margin-inline-end: calc(-1 * var(--space-3));
     padding: 0;
     border: 0;
     border-radius: 50%;
@@ -238,7 +254,22 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     color: var(--ink-2);
   }
 
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--ink);
+  }
+
+  .site-footer span {
+    margin-inline-end: auto;
+  }
+
   .site-footer p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-6);
     margin: 0;
     padding-block: var(--space-6) var(--space-8);
     border-top: 2px solid var(--ink);

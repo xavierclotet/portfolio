@@ -4,6 +4,7 @@ summary: Un LLM que escucha la grabación de un cantante y le da una valoración
 role: Diseño y desarrollo completo · en producción (beta) dentro de Gospel Vallès
 stack: [TypeScript, Supabase Edge Functions, OpenRouter, Gemini, Postgres]
 ai: [LLM multimodal (audio), Salida estructurada, Control de costes, Selección de modelos]
+decisions: [Presupuesto mensual y límites, Registro de cada llamada, Tiempo máximo propio]
 privateCode: true
 access: Privado, dentro del panel de Gospel Vallès
 featured: true

@@ -20,7 +20,7 @@ src/
 ├── content/pages/<es|en>/como-trabajo.md página «Cómo trabajo con IA»
 ├── data/home.ts            «Ahora mismo», skills por área (enlazan al proyecto si está publicado) y experiencia
 ├── lib/projects.ts         lectura de proyectos (filtra borradores fuera de desarrollo)
-├── lib/lines.ts            plano: cada proyecto es una línea (L = `order`), estaciones = `ai` + `stack`, correspondencias = lo compartido
+├── lib/lines.ts            plano: cada proyecto es una línea (L = `order`), estaciones = `ai` + `decisions` (máx. 7), correspondencias = lo compartido
 ├── components/             Home, LineMap (el plano), ProjectArticle, HowIWork, Arrow (icono SVG)
 ├── layouts/BaseLayout.astro head, SEO, hreflang, cabecera y pie
 └── pages/                  `/`, `/en/`, `/proyectos/<slug>/`, `/en/projects/<slug>/`, `/como-trabajo/`, `/en/how-i-work/`, 404

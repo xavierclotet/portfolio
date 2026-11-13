@@ -1,0 +1,89 @@
+---
+import Arrow from './Arrow.astro';
+import { SITE } from '../config/site.ts';
+import { t, type Lang } from '../i18n/ui.ts';
+
+interface Props {
+  lang: Lang;
+  /** Versión corta al final de un caso o de «Cómo trabajo». */
+  compact?: boolean;
+}
+
+const { lang, compact = false } = Astro.props;
+const tr = t(lang);
+const contacts = [
+  { label: SITE.email, href: SITE.email && `mailto:${SITE.email}`, main: true },
+  { label: 'LinkedIn', href: SITE.linkedin, main: false },
+  { label: 'GitHub', href: SITE.github, main: false },
+].filter((c) => c.href);
+const id = compact ? 'contact-title-end' : 'contact-title';
+---
+
+<section id={compact ? undefined : 'contact'} class:list={['terminus', { compact }]} aria-labelledby={id}>
+  {compact
+    ? <h2 id={id}>{tr('contact.end')}</h2>
+    : <h2 id={id}>{tr('contact.title')}</h2>}
+  <p class="lead">{tr('contact.lead')}</p>
+  <ul>
+    {contacts.map((c) => (
+      <li><a class:list={{ main: c.main }} href={c.href} rel="me">{c.label} <Arrow /></a></li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  /* Final de línea: el contacto cierra la página. */
+  .terminus {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 0.5rem solid var(--ink);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .compact h2 {
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+  }
+
+  .lead {
+    margin: 0;
+    max-width: 38rem;
+    font-size: 1.1875rem;
+    color: var(--ink-2);
+  }
+
+  .compact .lead {
+    font-size: 1.0625rem;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  a.main {
+    font-size: clamp(1.25rem, 4.5vw, 1.75rem);
+    overflow-wrap: anywhere;
+  }
+
+  .compact a.main {
+    font-size: 1.25rem;
+  }
+</style>

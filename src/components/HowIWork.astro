@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Contact from './Contact.astro';
 import { howIWorkPath, otherLang, type Lang } from '../i18n/ui.ts';
 
 interface Props {
@@ -22,6 +23,7 @@ const { Content } = await render(page);
     <div class="route prose">
       <Content />
     </div>
+    <Contact lang={lang} compact />
   </article>
 </BaseLayout>
 

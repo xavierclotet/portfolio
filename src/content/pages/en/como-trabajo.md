@@ -15,10 +15,10 @@ I give them and how I check what they do.
 - When a visual rule can be checked, it becomes a test (text levels, type scale…), so it does not depend on
   the agent remembering it.
 
-## The same tools in every harness
+## The same tools in every agent
 
 I work with **Claude Code**, **GitHub Copilot CLI** and **opencode**. Skills live once in the repo
-(`.agents/skills`) and are exposed to each harness through links, so there are no copies drifting apart.
+(`.agents/skills`) and are exposed to each agent tool (the program that runs the agent) through links, so there are no copies drifting apart.
 
 ## Skills I use
 

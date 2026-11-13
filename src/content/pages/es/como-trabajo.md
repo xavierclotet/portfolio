@@ -15,10 +15,10 @@ el contexto que les doy y cómo compruebo lo que hacen.
 - Cuando una regla visual se puede comprobar, se convierte en test (niveles de texto, escala tipográfica…),
   para no depender de que el agente la recuerde.
 
-## Las mismas herramientas en todos los harness
+## Las mismas herramientas en todos los agentes
 
 Trabajo con **Claude Code**, **GitHub Copilot CLI** y **opencode**. Las skills viven una sola vez en el repo
-(`.agents/skills`) y se exponen a cada harness con enlaces, así no hay copias que se desincronicen.
+(`.agents/skills`) y se exponen a cada herramienta de agentes (el programa que ejecuta el agente) con enlaces, así no hay copias que se desincronicen.
 
 ## Skills que uso
 

@@ -24,18 +24,22 @@ export interface Line {
 
 const keyOf = (label: string): string => label.toLowerCase().trim();
 
-/** Cada proyecto es una línea; sus tecnologías e IA, estaciones; lo compartido, correspondencias. */
+/** Estaciones por línea: el plano tiene que leerse de un vistazo. */
+const MAX_STOPS = 7;
+
+/** Cada proyecto es una línea; sus usos de IA y sus decisiones, estaciones; lo compartido, correspondencias. */
 export function buildLines(projects: Project[]): Line[] {
   const lines: Line[] = projects.map((project) => {
     const n = project.data.order;
     const raw = [
       ...project.data.ai.map((label) => ({ label, ai: true })),
-      ...project.data.stack.map((label) => ({ label, ai: false })),
+      ...project.data.decisions.map((label) => ({ label, ai: false })),
     ];
     const seen = new Set<string>();
     const stops = raw
       .map((s) => ({ ...s, key: keyOf(s.label), also: [] as number[], col: 0, span: 0 }))
-      .filter((s) => !seen.has(s.key) && seen.add(s.key));
+      .filter((s) => !seen.has(s.key) && seen.add(s.key))
+      .slice(0, MAX_STOPS);
     return { n, code: `L${n}`, slug: slugOf(project), project, stops };
   });
 

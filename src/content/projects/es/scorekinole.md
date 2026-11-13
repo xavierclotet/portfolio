@@ -4,6 +4,7 @@ summary: PWA para puntuar partidas de crokinole y organizar torneos en directo, 
 role: Proyecto propio · diseño, desarrollo y operación
 stack: [SvelteKit, Svelte 5, TypeScript, Firebase, Cloud Functions, Stripe, Vitest, Playwright]
 ai: [WebMCP (contexto para agentes), Desarrollo con agentes]
+decisions: [Offline-first, Transacciones en cada escritura, e2e contra emuladores]
 links:
   demo: https://scorekinole.es
 order: 1

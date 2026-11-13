@@ -1,17 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Arrow from '../components/Arrow.astro';
-import { t } from '../i18n/ui.ts';
+import { UI } from '../i18n/ui.ts';
 
-const tr = t('es');
+// Astro sirve una sola 404 para todas las rutas: se muestra en los dos idiomas.
+const es = UI.es;
+const en = UI.en;
 ---
 
-<BaseLayout lang="es" title={tr('notfound.title')}>
+<BaseLayout lang="es" title={`${es['notfound.title']} / ${en['notfound.title']}`}>
   <section class="out">
     <div class="cut" aria-hidden="true"><span></span><span></span></div>
-    <h1>{tr('notfound.title')}</h1>
-    <p class="lead">{tr('notfound.lead')}</p>
-    <p><a class="back" href="/"><Arrow back /> {tr('notfound.back')}</a></p>
+    <h1>{es['notfound.title']}</h1>
+    <p class="lead">{es['notfound.lead']}</p>
+    <p><a class="back" href="/"><Arrow back /> {es['notfound.back']}</a></p>
+
+    <div lang="en" class="other">
+      <h2>{en['notfound.title']}</h2>
+      <p class="lead">{en['notfound.lead']}</p>
+      <p><a class="back" href="/en/"><Arrow back /> {en['notfound.back']}</a></p>
+    </div>
   </section>
 </BaseLayout>
 
@@ -46,10 +54,21 @@ const tr = t('es');
     letter-spacing: -0.03em;
   }
 
+  h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
   .lead {
     margin: 0 0 var(--space-6);
     font-size: 1.1875rem;
     color: var(--ink-2);
+  }
+
+  .other {
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--ink);
   }
 
   .back {

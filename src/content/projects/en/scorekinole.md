@@ -4,6 +4,7 @@ summary: A PWA to score crokinole games and run live tournaments, offline-first 
 role: Personal project · design, development and operations
 stack: [SvelteKit, Svelte 5, TypeScript, Firebase, Cloud Functions, Stripe, Vitest, Playwright]
 ai: [WebMCP (agent context), Agentic development]
+decisions: [Offline-first, Transactions on every write, e2e against emulators]
 links:
   demo: https://scorekinole.es
 order: 1

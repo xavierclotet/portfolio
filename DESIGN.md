@@ -1,6 +1,6 @@
 ---
 name: Xavi Clotet · Portfolio
-description: Plano de líneas de transporte. Cada proyecto es una línea con su color; sus tecnologías e IA son estaciones.
+description: Plano de líneas de transporte. Cada proyecto es una línea con su color; sus usos de IA y sus decisiones clave (`ai` + `decisions`, máximo 7) son estaciones.
 colors:
   ground: "oklch(96% 0.004 250)"
   panel: "oklch(99.5% 0.002 250)"
@@ -159,7 +159,7 @@ components:
 
 **Creative North Star: "El plano de la red"**
 
-La web es un plano de transporte. Cada proyecto es una línea con su número (L1–L4, según su `order`), su color y su placa redonda; sus tecnologías e IA son estaciones sobre un trazo grueso, y lo que comparten varias líneas son correspondencias con anillo de tinta. El lector no ve una galería de proyectos, sino un sistema conectado por decisiones y herramientas reales.
+La web es un plano de transporte. Cada proyecto es una línea con su número (L1–L4, según su `order`), su color y su placa redonda; sus usos de IA y sus decisiones clave (`ai` + `decisions`, máximo 7) son estaciones sobre un trazo grueso, y lo que comparten varias líneas son correspondencias con anillo de tinta. El lector no ve una galería de proyectos, sino un sistema conectado por decisiones y herramientas reales.
 
 El material es señalética: un fondo gris frío y plano, tinta casi negra, una cabecera que es una banda de estación en tinta y una sola familia (Overpass) en dos pesos. Todo el color se gasta en las cuatro líneas; el resto de la página es tinta, filetes y espacio. La densidad es la de un plano legible de pie en el andén: pocas marcas, cada una con un significado fijado en la leyenda.
 
@@ -265,7 +265,7 @@ Placa de señal: sólida, recta y en tinta.
 - **Móvil:** los enlaces bajan a una segunda fila con 1rem de separación.
 
 ### Placa de línea
-El código de línea en un círculo, como en las señales de estación. Tres tamaños: 2.25rem (plano y siguiente línea), 1.5rem (correspondencias e índice de skills) y 3.5rem (cabecera de un caso). Fondo del color de la línea, código en 700.
+El código de línea en un círculo, como en las señales de estación. Tres tamaños: 2.25rem (plano y siguiente proyecto), 1.5rem (correspondencias e índice de skills) y 3.5rem (cabecera de un caso). Fondo del color de la línea, código en 700.
 
 ### Plano de líneas (componente firma)
 - **Cabecera:** título y lead a la izquierda, leyenda a la derecha desde 64rem. La leyenda dibuja trazo, estación, estación de IA y correspondencia en el color de la L1.
@@ -276,8 +276,11 @@ El código de línea en un círculo, como en las señales de estación. Tres tam
 ### Recorrido (caso de estudio y «Cómo trabajo»)
 El texto largo cuelga de un trazo vertical del color de la línea; cada h2 es una estación sobre el trazo y el último es el final de línea, relleno de tinta. Los marcadores de lista van en el color de la línea. La cabecera del caso cierra con un filete de trazo en el color de la línea; los puntos de IA son círculos rellenos y el stack, puntos con borde.
 
-### Siguiente línea
-Al final de un caso, un transbordo al siguiente: filete de trazo en el color de la siguiente línea, «Siguiente línea» en tinta secundaria y debajo la placa, el nombre (700, clamp(1.375rem, 4vw, 1.75rem)) y la flecha.
+### Contacto al final
+El bloque de contacto (Contact.astro) cierra la portada y, en versión compacta («¿Hablamos?»), cada caso y «Cómo trabajo»; el pie repite correo, LinkedIn y GitHub. Las tecnologías de cada proyecto viven en el caso (Stack) y en el índice de Skills, no en el plano.
+
+### Siguiente proyecto
+Al final de un caso, un transbordo al siguiente: filete de trazo en el color de la siguiente línea, «Siguiente proyecto» en tinta secundaria y debajo la placa, el nombre (700, clamp(1.375rem, 4vw, 1.75rem)) y la flecha.
 
 ### Aviso «Ahora mismo»
 Pantalla de avisos del andén: bloque en banda con radio de 0.5rem, texto en el color del fondo y cada aviso separado por un filete al 35%. Tres columnas desde 52rem.

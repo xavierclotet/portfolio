@@ -4,6 +4,7 @@ summary: Web pública y panel de gestión de un coro, con permisos por rol, PWA 
 role: Proyecto propio para un coro · diseño, desarrollo y operación
 stack: [Astro, TypeScript, Supabase, Postgres (RLS), Edge Functions, pg_cron, Cloudflare Pages, Playwright]
 ai: [LLM en producción, Desarrollo con agentes, RAG (diseño)]
+decisions: [Permisos en Postgres (RLS), Límites contra abusos, e2e por rol]
 links:
   demo: https://gospelvalles.com
 privateCode: true

@@ -14,7 +14,8 @@ export interface SkillGroup {
 interface HomeData {
   now: string[];
   skills: SkillGroup[];
-  experience: string;
+  /** Cronología: año (o «Ahora») y qué hacía. */
+  experience: { when: string; what: string }[];
 }
 
 export const HOME: Record<Lang, HomeData> = {
@@ -70,7 +71,11 @@ export const HOME: Record<Lang, HomeData> = {
         ],
       },
     ],
-    experience: 'Ahora, en empresa: librería de componentes Angular 21 que usan varios equipos de producto (diseño de API, tests y publicación en npm).',
+    experience: [
+      { when: '1999', what: 'Empiezo a hacer webs.' },
+      { when: '2015', what: 'Me especializo en frontend, con Angular 2.' },
+      { when: 'Ahora', what: 'En empresa: librería de componentes Angular 21 que usan varios equipos de producto (diseño de API, tests y publicación en npm). Por mi cuenta, funciones con LLM en producción.' },
+    ],
   },
   en: {
     now: [
@@ -124,6 +129,10 @@ export const HOME: Record<Lang, HomeData> = {
         ],
       },
     ],
-    experience: 'Currently, at work: an Angular 21 component library used by several product teams (API design, tests and npm publishing).',
+    experience: [
+      { when: '1999', what: 'I start building websites.' },
+      { when: '2015', what: 'I specialise in frontend, with Angular 2.' },
+      { when: 'Now', what: 'At work: an Angular 21 component library used by several product teams (API design, tests and npm publishing). On my own, LLM features in production.' },
+    ],
   },
 };

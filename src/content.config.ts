@@ -13,6 +13,8 @@ const projects = defineCollection({
     stack: z.array(z.string()).min(1),
     /** Etiquetas de AI que destaca el caso (p. ej. «LLM multimodal», «Evals»). */
     ai: z.array(z.string()).default([]),
+    /** Decisiones clave en pocas palabras: son las estaciones del plano junto a las de IA. */
+    decisions: z.array(z.string()).default([]),
     links: z.object({ repo: z.url().optional(), demo: z.url().optional() }).default({}),
     /** Dónde está el proyecto cuando no tiene web pública (p. ej. «Herramienta personal, sin publicar»). */
     access: z.string().optional(),

@@ -16,17 +16,34 @@ const cols = columnsOf(lines);
 <div class="map" data-map style={`--cols: ${cols}`}>
   <div class="map-top">
     <slot />
-    <ul class="legend" aria-label={tr('map.legend')}>
-      <li><span class="sym track" aria-hidden="true"></span>{tr('map.line')}</li>
-      <li><span class="sym stop-sym" aria-hidden="true"></span>{tr('map.stop')}</li>
-      <li><span class="sym stop-sym ai" aria-hidden="true"></span>{tr('map.ai')}</li>
-      <li><span class="sym stop-sym x" aria-hidden="true"></span>{tr('map.interchange')}</li>
-    </ul>
+    <div class="legend">
+      <p class="legend-title">{tr('map.legend')}</p>
+      <ul class="legend-lines" aria-label={tr('map.legend.lines')}>
+        {lines.map((line) => (
+          <li class:list={[`line-${line.n}`]}>
+            <a href={`#line-${line.n}`}>
+              <span class="plaque small" aria-hidden="true">{line.code}</span>
+              <span class="sym track" aria-hidden="true"></span>
+              {line.project.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <ul class="legend-marks" aria-label={tr('map.legend.marks')}>
+        <li><span class="sym stop-sym" aria-hidden="true"></span>{tr('map.stop')}</li>
+        <li><span class="sym stop-sym ai" aria-hidden="true"></span>{tr('map.ai')}</li>
+        <li>
+          <span class="sym stop-sym x" aria-hidden="true"></span>
+          <span class="plaque small line-2" aria-hidden="true">L2</span>
+          {tr('map.interchange')}
+        </li>
+      </ul>
+    </div>
   </div>
 
   <ol class="lines">
     {lines.map((line) => (
-      <li class:list={['line', `line-${line.n}`]}>
+      <li class:list={['line', `line-${line.n}`]} id={`line-${line.n}`}>
         <div class="head">
           <span class="plaque" aria-hidden="true">{line.code}</span>
           <div>
@@ -42,7 +59,7 @@ const cols = columnsOf(lines);
               : line.project.data.access && <p class="access">{line.project.data.access}</p>}
           </div>
         </div>
-        <details class="stops-wrap" open>
+        <details class="stops-wrap" open data-featured={line.project.data.featured ? '' : undefined}>
           <summary>{tr('map.stops')} <span class="count">{line.stops.length}</span></summary>
           <ol class="stops" aria-label={`${tr('map.stops')}, ${line.code}`}>
             {line.stops.map((stop) => (
@@ -50,7 +67,6 @@ const cols = columnsOf(lines);
                 class:list={['stop', { ai: stop.ai, x: stop.also.length > 0 }]}
                 data-st={stop.key}
                 style={`--col: ${stop.col + 1}; --span: ${stop.span}`}
-                tabindex={stop.also.length > 0 ? 0 : undefined}
               >
                 <span class="dot" aria-hidden="true"></span>
                 <span class="name">
@@ -77,7 +93,9 @@ const cols = columnsOf(lines);
   const narrow = window.matchMedia('(max-width: 63.99rem)');
   for (const map of document.querySelectorAll<HTMLElement>('[data-map]')) {
     const groups = [...map.querySelectorAll<HTMLDetailsElement>('.stops-wrap')];
-    const sync = () => groups.forEach((d, i) => (d.open = narrow.matches ? i === 0 : true));
+    // En móvil se abre la línea destacada (o la primera).
+    const first = Math.max(0, groups.findIndex((d) => d.hasAttribute('data-featured')));
+    const sync = () => groups.forEach((d, i) => (d.open = narrow.matches ? i === first : true));
     sync();
     narrow.addEventListener('change', sync);
     for (const d of groups) {
@@ -101,18 +119,15 @@ const cols = columnsOf(lines);
       };
       stop.addEventListener('pointerenter', on);
       stop.addEventListener('pointerleave', off);
-      stop.addEventListener('focus', on);
-      stop.addEventListener('blur', off);
     }
   }
 </script>
 
 <style>
-  /* Leyenda: qué significa cada marca. */
   /* Cabecera del bloque y leyenda: lado a lado en pantallas anchas para que el plano entre antes. */
   .map-top {
     display: grid;
-    gap: var(--space-4) var(--space-8);
+    gap: var(--space-6) var(--space-8);
     margin-bottom: var(--space-6);
   }
 
@@ -120,47 +135,84 @@ const cols = columnsOf(lines);
     margin: 0 0 var(--space-2);
   }
 
-  .map-top :global(p) {
+  .map-top > :global(div:first-child p) {
     margin: 0;
     max-width: 34rem;
   }
 
   @media (min-width: 64rem) {
     .map-top {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: end;
     }
   }
 
+  /* Leyenda: qué proyecto es cada color y qué significa cada marca. */
   .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-6);
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    display: grid;
+    gap: var(--space-3);
     font-size: 0.875rem;
     color: var(--ink-2);
   }
 
-  @media (min-width: 64rem) {
-    .legend {
-      display: grid;
-      grid-template-columns: auto auto;
-      gap: var(--space-1) var(--space-6);
-    }
+  .legend-title {
+    margin: 0;
+    font-weight: 700;
+    color: var(--ink);
   }
 
-  .legend li {
+  .legend ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .legend-lines {
+    padding-bottom: var(--space-3) !important;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .legend li,
+  .legend-lines a {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
   }
 
+  .legend-lines a {
+    min-height: 2.75rem;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .legend-lines a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 2px;
+  }
+
+  .legend-lines .sym {
+    --line: inherit;
+  }
+
+  .legend-marks li {
+    min-height: 1.75rem;
+  }
+
+  .legend-marks .plaque {
+    margin-inline-start: calc(-1 * var(--space-1));
+  }
   /* La leyenda dibuja sus marcas en un color de línea, como en el plano. */
   .sym {
-    --line: var(--l1);
     flex: none;
+  }
+
+  .legend-marks .sym {
+    --line: var(--l1);
   }
 
   .sym.track {
@@ -219,8 +271,8 @@ const cols = columnsOf(lines);
 
   .head a {
     display: inline-block;
-    padding-block: 0.45rem;
-    margin-block: -0.45rem;
+    padding-block: 0.6rem;
+    margin-block: -0.6rem;
     text-decoration: none;
   }
 
@@ -371,15 +423,6 @@ const cols = columnsOf(lines);
     cursor: default;
   }
 
-  .stop.x:focus-visible {
-    outline: none;
-  }
-
-  .stop.x:focus-visible .name {
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
-    text-decoration-color: var(--ink);
-  }
 
   /* Escritorio: tira horizontal con los nombres a 40 grados, como el plano del vagón. */
   @media (min-width: 64rem) {
@@ -457,6 +500,7 @@ const cols = columnsOf(lines);
     .lines:not(.has-lit):has(.line:hover, .line:focus-within) .line:not(:hover, :focus-within),
     .lines.has-lit .line:not(:has(.lit)) {
       opacity: 0.32;
+      transition-delay: 120ms;
     }
   }
 

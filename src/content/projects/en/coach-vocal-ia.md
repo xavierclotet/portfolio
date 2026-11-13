@@ -4,6 +4,7 @@ summary: An LLM that listens to a singer's recording and gives useful feedback, 
 role: End-to-end design and development · in production (beta) inside Gospel Vallès
 stack: [TypeScript, Supabase Edge Functions, OpenRouter, Gemini, Postgres]
 ai: [Multimodal LLM (audio), Structured output, Cost control, Model selection]
+decisions: [Monthly budget and limits, Every call logged, Own timeout]
 privateCode: true
 access: Private, inside the Gospel Vallès panel
 featured: true
