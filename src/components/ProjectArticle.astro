@@ -1,8 +1,9 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from './Arrow.astro';
 import { otherLang, projectPath, projectsPath, t, type Lang } from '../i18n/ui.ts';
-import { slugOf, type Project } from '../lib/projects.ts';
+import { getProjects, slugOf, type Project } from '../lib/projects.ts';
 
 interface Props {
   project: Project;
@@ -11,92 +12,244 @@ interface Props {
 
 const { project, lang } = Astro.props;
 const tr = t(lang);
-const { title, summary, role, stack, ai, links, privateCode } = project.data;
+const { title, summary, role, stack, ai, links, privateCode, order } = project.data;
 const { Content } = await render(project);
+const all = await getProjects(lang);
+const next = all.length > 1 ? all[(all.findIndex((p) => p.id === project.id) + 1) % all.length] : undefined;
+/** El «·» de Overpass no queda centrado en su caja: se sustituye por un punto dibujado. */
+const roleParts = role.split('·').map((part) => part.trim());
 ---
 
-<BaseLayout lang={lang} title={title} description={summary} altPath={projectPath(otherLang(lang), slugOf(project))}>
-  <article>
-    <p><a href={projectsPath(lang)}>← {tr('project.back')}</a></p>
+<BaseLayout lang={lang} title={title} description={summary} altPath={projectPath(otherLang(lang), slugOf(project))} current="projects" line={order}>
+  <article class:list={['case', `line-${order}`]}>
+    <p class="back"><a href={projectsPath(lang)}><Arrow back /> {tr('project.back')}</a></p>
+
     <header class="head">
+      <p class="sign">
+        <span class="plaque large" aria-hidden="true">L{order}</span>
+        <span class="sr-only">{tr('map.line.name')} {order}</span>
+      </p>
       <h1>{title}</h1>
       <p class="lead">{summary}</p>
-      <p class="muted">{role}</p>
-      {ai.length > 0 && <ul class="tags">{ai.map((tag) => <li>{tag}</li>)}</ul>}
+      <p class="role">{roleParts.map((part, i) => <>{i > 0 && <span class="sep" aria-hidden="true"></span>}{i > 0 && <span class="sr-only">, </span>}{part}</>)}</p>
+      {ai.length > 0 && (
+        <ul class="ai" aria-label={tr('map.ai')}>
+          {ai.map((tag) => <li><span class="dot" aria-hidden="true"></span>{tag}</li>)}
+        </ul>
+      )}
     </header>
 
-    <div class="prose">
+    <div class="route prose">
       <Content />
     </div>
 
     <aside class="facts">
-      <h2>{tr('project.stack')}</h2>
-      <ul class="tags">{stack.map((s) => <li>{s}</li>)}</ul>
-      <h2>{tr('project.links')}</h2>
-      <ul class="links">
-        {links.demo && <li><a href={links.demo}>{tr('project.demo')}</a></li>}
-        {links.repo && <li><a href={links.repo}>{tr('project.repo')}</a></li>}
-      </ul>
-      {privateCode && <p class="muted">{tr('project.private')}</p>}
+      <div>
+        <h2>{tr('project.stack')}</h2>
+        <ul class="stack">{stack.map((s) => <li>{s}</li>)}</ul>
+      </div>
+      {(links.demo || links.repo || privateCode) && (
+        <div>
+          <h2>{tr('project.links')}</h2>
+          <ul class="links">
+            {links.demo && <li><a href={links.demo}>{tr('project.demo')} <Arrow /></a></li>}
+            {links.repo && <li><a href={links.repo}>{tr('project.repo')} <Arrow /></a></li>}
+          </ul>
+          {privateCode && <p class="muted">{tr('project.private')}</p>}
+        </div>
+      )}
     </aside>
+
+    {next && (
+      <nav class:list={['next', `line-${next.data.order}`]} aria-label={tr('project.next')}>
+        <a href={projectPath(lang, slugOf(next))}>
+          <span class="next-label">{tr('project.next')}</span>
+          <span class="next-line">
+            <span class="plaque" aria-hidden="true">L{next.data.order}</span>
+            <span>{next.data.title}</span>
+            <Arrow />
+          </span>
+        </a>
+      </nav>
+    )}
   </article>
 </BaseLayout>
 
 <style>
-  .head h1 {
-    margin: var(--space-4) 0 var(--space-3);
-    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  .back {
+    margin: 0 0 var(--space-8);
+  }
+
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .back a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+  }
+
+  .head {
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-12);
+    border-bottom: var(--track) solid var(--line);
+  }
+
+  .sign {
+    margin: 0 0 var(--space-4);
+  }
+
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(2.25rem, 8vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
   }
 
   .lead {
-    margin: 0 0 var(--space-2);
-    font-size: 1.125rem;
+    margin: 0 0 var(--space-3);
+    font-size: 1.1875rem;
+    max-width: 38rem;
   }
 
-  .head .tags {
-    margin-top: var(--space-3);
+  .role {
+    margin: 0;
+    color: var(--ink-2);
   }
 
-  .prose {
-    margin-top: var(--space-8);
+  /* Punto dibujado: el «·» de Overpass no queda centrado en su caja. */
+  .sep {
+    display: inline-block;
+    width: 0.3em;
+    height: 0.3em;
+    margin-inline: 0.55em;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: 0.22em;
   }
 
-  .prose :global(h2) {
-    margin-top: var(--space-8);
-    font-size: 1.25rem;
+  /* Siguiente línea: transbordo al próximo caso. */
+  .next {
+    margin-top: var(--space-12);
   }
 
-  .prose :global(li + li) {
-    margin-top: var(--space-1);
+  .next a {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6) 0;
+    border-top: var(--track) solid var(--line);
+    text-decoration: none;
+  }
+
+  .next-label {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .next-line {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 4vw, 1.75rem);
+  }
+
+  .next a:hover .next-line span:not(.plaque) {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 3px;
+  }
+
+  .ai {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 700;
+  }
+
+  .ai li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .ai .dot {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background: var(--line);
   }
 
   .facts {
-    margin-top: var(--space-12);
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-16);
     padding-top: var(--space-6);
-    border-top: 1px solid var(--border);
+    border-top: 2px solid var(--ink);
+  }
+
+  @media (min-width: 40rem) {
+    .facts {
+      grid-template-columns: 2fr 1fr;
+    }
   }
 
   .facts h2 {
-    margin: var(--space-6) 0 var(--space-3);
+    margin: 0 0 var(--space-3);
     font-size: 1rem;
   }
 
-  .facts h2:first-child {
-    margin-top: 0;
+  .facts p {
+    margin: var(--space-3) 0 0;
+    font-size: 0.9375rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stack li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .stack li::before {
+    content: '';
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: 0.1875rem solid var(--line);
+    background: var(--panel);
   }
 
   .links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4);
+    gap: var(--space-2) var(--space-6);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .links a {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     min-height: 2.75rem;
-    line-height: 2.75rem;
+    font-weight: 700;
   }
 </style>

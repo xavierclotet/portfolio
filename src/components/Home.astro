@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from './ProjectCard.astro';
+import Arrow from './Arrow.astro';
+import LineMap from './LineMap.astro';
 import { SITE } from '../config/site.ts';
 import { HOME } from '../data/home.ts';
-import { PROJECTS_SEGMENT, howIWorkPath, projectPath, t, type Lang } from '../i18n/ui.ts';
-import { getProjects, slugOf } from '../lib/projects.ts';
+import { PROJECTS_SEGMENT, howIWorkPath, projectPath, projectsPath, t, type Lang } from '../i18n/ui.ts';
+import { getProjects } from '../lib/projects.ts';
+import { buildLines, lineOf } from '../lib/lines.ts';
 
 interface Props {
   lang: Lang;
@@ -13,154 +15,337 @@ interface Props {
 const { lang } = Astro.props;
 const tr = t(lang);
 const data = HOME[lang];
-const projects = await getProjects(lang);
-const published = new Set(projects.map(slugOf));
+const lines = buildLines(await getProjects(lang));
 const contacts = [
-  { label: 'GitHub', href: SITE.github },
-  { label: 'LinkedIn', href: SITE.linkedin },
-  { label: SITE.email, href: SITE.email && `mailto:${SITE.email}` },
+  { label: SITE.email, href: SITE.email && `mailto:${SITE.email}`, main: true },
+  { label: 'LinkedIn', href: SITE.linkedin, main: false },
+  { label: 'GitHub', href: SITE.github, main: false },
 ].filter((c) => c.href);
+const mail = contacts.find((c) => c.main);
 ---
 
-<BaseLayout lang={lang}>
+<BaseLayout lang={lang} wide>
   <section class="hero">
     <h1>{tr('hero.title')}</h1>
-    <p class="lead muted">{tr('hero.lead')}</p>
+    <div class="pitch">
+      <p class="lead">{tr('hero.lead')}</p>
+      <p class="actions">
+        {mail && <a class="sign" href={mail.href}>{tr('hero.write')} <Arrow /></a>}
+        {lines.length > 0 && <a class="go" href={projectsPath(lang)}>{tr('hero.projects')}</a>}
+      </p>
+    </div>
   </section>
 
-  {projects.length > 0 && (
-    <section id={PROJECTS_SEGMENT[lang]} aria-labelledby="projects-title">
-      <h2 id="projects-title">{tr('projects.title')}</h2>
-      <p class="muted">{tr('projects.lead')}</p>
-      <div class="grid">
-        {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
-      </div>
+  {lines.length > 0 && (
+    <section id={PROJECTS_SEGMENT[lang]} class="block projects" aria-labelledby="projects-title">
+      <LineMap lines={lines} lang={lang}>
+        <div>
+          <h2 id="projects-title">{tr('projects.title')}</h2>
+          <p class="muted">{tr('projects.lead')}</p>
+        </div>
+      </LineMap>
     </section>
   )}
 
-  <section aria-labelledby="howiwork-title">
+  <section class="block split" aria-labelledby="howiwork-title">
     <h2 id="howiwork-title">{tr('howiwork.title')}</h2>
-    <p class="muted">{tr('howiwork.lead')}</p>
-    <p><a class="more" href={howIWorkPath(lang)}>{tr('howiwork.more')} →</a></p>
+    <div>
+      <p>{tr('howiwork.lead')}</p>
+      <p><a class="go" href={howIWorkPath(lang)}>{tr('howiwork.more')} <Arrow /></a></p>
+    </div>
   </section>
 
-  <section aria-labelledby="now-title">
+  <section class="notice" aria-labelledby="now-title">
     <h2 id="now-title">{tr('now.title')}</h2>
-    <ul class="list">
+    <ul>
       {data.now.map((item) => <li>{item}</li>)}
     </ul>
   </section>
 
-  <section aria-labelledby="skills-title">
-    <h2 id="skills-title">{tr('skills.title')}</h2>
-    <p class="muted">{tr('skills.lead')}</p>
-    <div class="skills">
+  <section class="block" aria-labelledby="skills-title">
+    <div class="block-head">
+      <h2 id="skills-title">{tr('skills.title')}</h2>
+      <p class="muted">{tr('skills.lead')}</p>
+    </div>
+    <div class="index">
       {data.skills.map((group) => (
         <div>
           <h3>{group.title}</h3>
-          <ul class="tags">
-            {group.items.map((skill) => (
-              <li>
-                {skill.project && published.has(skill.project)
-                  ? <a href={projectPath(lang, skill.project)}>{skill.label}</a>
-                  : skill.label}
-              </li>
-            ))}
+          <ul>
+            {group.items.map((skill) => {
+              const n = skill.project ? lineOf(lines, skill.project) : undefined;
+              return (
+                <li class:list={[n && `line-${n}`]}>
+                  {n && skill.project
+                    ? <a href={projectPath(lang, skill.project)}>
+                        <span>{skill.label}</span>
+                        <span class="plaque small" aria-label={`${tr('map.line.name')} ${n}`}>L{n}</span>
+                      </a>
+                    : <span>{skill.label}</span>}
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}
     </div>
   </section>
 
-  <section aria-labelledby="experience-title">
+  <section class="block split" aria-labelledby="experience-title">
     <h2 id="experience-title">{tr('experience.title')}</h2>
-    <p class="muted">{data.experience}</p>
+    <p>{data.experience}</p>
   </section>
 
-  <section id="contact" aria-labelledby="contact-title">
+  <section id="contact" class="terminus" aria-labelledby="contact-title">
     <h2 id="contact-title">{tr('contact.title')}</h2>
-    <p class="muted">{tr('contact.lead')}</p>
-    <ul class="contacts">
-      {contacts.map((c) => <li><a href={c.href} rel="me">{c.label}</a></li>)}
+    <p class="lead">{tr('contact.lead')}</p>
+    <ul>
+      {contacts.map((c) => (
+        <li><a class:list={{ main: c.main }} href={c.href} rel="me">{c.label} <Arrow /></a></li>
+      ))}
     </ul>
   </section>
 </BaseLayout>
 
 <style>
+  .hero {
+    padding-block: 0 var(--space-4);
+  }
+
   .hero h1 {
-    margin: 0 0 var(--space-4);
-    font-size: clamp(1.75rem, 6vw, 2.75rem);
+    margin: 0 0 var(--space-6);
+    font-size: clamp(2.25rem, 7vw, 3.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+  }
+
+  /* Escritorio: titular a la izquierda y entrada a la derecha, para que el plano entre en la primera pantalla. */
+  @media (min-width: 64rem) {
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      align-items: end;
+      gap: var(--space-12);
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 20ch;
+    }
+
+    .block.projects {
+      margin-top: var(--space-12);
+    }
   }
 
   .lead {
     margin: 0;
+    max-width: 38rem;
+    font-size: 1.1875rem;
+    color: var(--ink-2);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-8);
+    margin: var(--space-8) 0 0;
+  }
+
+  /* Botón principal: placa de señal en tinta. */
+  .sign {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 3.25rem;
+    padding: 0.2rem var(--space-6) 0;
+    background: var(--ink);
+    color: var(--ground);
+    border-radius: 0.375rem;
+    font-weight: 700;
     font-size: 1.125rem;
+    text-decoration: none;
+    transition: background-color 180ms var(--ease-out);
+  }
+
+  .sign:hover {
+    background: color-mix(in oklch, var(--ink) 82%, var(--ground));
+  }
+
+  .go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    font-weight: 700;
+  }
+
+  .block {
+    margin-top: var(--space-16);
+  }
+
+  .block-head {
+    max-width: 38rem;
+    margin-bottom: var(--space-8);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.625rem, 4.5vw, 2.25rem);
+  }
+
+  .block-head p {
+    margin: 0;
+  }
+
+  /* Bloques de texto: título a la izquierda y texto a la derecha en pantallas anchas. */
+  .split {
+    display: grid;
+    gap: var(--space-2) var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--ink);
+  }
+
+  .split p {
+    margin: 0 0 var(--space-3);
     max-width: 38rem;
   }
 
-  section + section {
-    margin-top: var(--space-12);
-  }
-
-  .grid {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  @media (min-width: 40rem) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 52rem) {
+    .split {
+      grid-template-columns: 18rem 1fr;
     }
   }
 
-  .more {
-    display: inline-block;
-    min-height: 2.75rem;
-    line-height: 2.75rem;
-  }
-
-  .list {
-    margin: 0;
-    padding-inline-start: 1.25rem;
-  }
-
-  .list li + li {
-    margin-top: var(--space-2);
-  }
-
-  .skills {
-    display: grid;
-    gap: var(--space-6);
+  /* «Ahora mismo» como pantalla de avisos del andén. */
+  .notice {
+    margin-top: var(--space-16);
+    padding: var(--space-6) var(--space-4);
+    background: var(--band);
+    color: var(--on-band);
+    border-radius: 0.5rem;
   }
 
   @media (min-width: 40rem) {
-    .skills {
-      grid-template-columns: repeat(2, 1fr);
+    .notice {
+      padding: var(--space-8);
     }
   }
 
-  .skills h3 {
-    margin: 0 0 var(--space-3);
-    font-size: 1rem;
+  .notice h2 {
+    margin-bottom: var(--space-4);
+    font-size: 1.25rem;
   }
 
-  /* Las skills con proyecto son enlaces: color de acento para que se note sin hover. */
-  .skills .tags li:has(a) {
-    border-color: var(--accent);
-  }
-
-  .contacts {
-    display: flex;
-    flex-wrap: wrap;
+  .notice ul {
+    display: grid;
     gap: var(--space-4);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .contacts a {
-    display: inline-block;
+  @media (min-width: 52rem) {
+    .notice ul {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .notice li {
+    padding-top: var(--space-3);
+    border-top: 2px solid color-mix(in oklch, var(--on-band) 35%, transparent);
+  }
+
+  /* Índice de estaciones: cada skill con la placa de la línea donde la uso. */
+  .index {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 40rem) {
+    .index {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .index {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .index h3 {
+    margin: 0 0 var(--space-2);
+    padding-bottom: var(--space-2);
+    font-size: 1rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .index ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .index li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .index li > * {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
     min-height: 2.75rem;
-    line-height: 2.75rem;
+    padding-block: 0.4rem 0.25rem;
+  }
+
+  .index a {
+    text-decoration: none;
+  }
+
+  .index a:hover span:first-child {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 2px;
+  }
+
+  /* Final de línea: el contacto cierra la página. */
+  .terminus {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 0.5rem solid var(--ink);
+  }
+
+  .terminus h2 {
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .terminus ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+    margin: var(--space-8) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .terminus a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  .terminus a.main {
+    font-size: clamp(1.25rem, 4.5vw, 1.75rem);
+    overflow-wrap: anywhere;
   }
 </style>
+

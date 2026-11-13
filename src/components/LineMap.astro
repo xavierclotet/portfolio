@@ -1,0 +1,450 @@
+---
+import Arrow from './Arrow.astro';
+import { projectPath, t, type Lang } from '../i18n/ui.ts';
+import { columnsOf, type Line } from '../lib/lines.ts';
+
+interface Props {
+  lines: Line[];
+  lang: Lang;
+}
+
+const { lines, lang } = Astro.props;
+const tr = t(lang);
+const cols = columnsOf(lines);
+---
+
+<div class="map" data-map style={`--cols: ${cols}`}>
+  <div class="map-top">
+    <slot />
+    <ul class="legend" aria-label={tr('map.legend')}>
+      <li><span class="sym track" aria-hidden="true"></span>{tr('map.line')}</li>
+      <li><span class="sym stop-sym" aria-hidden="true"></span>{tr('map.stop')}</li>
+      <li><span class="sym stop-sym ai" aria-hidden="true"></span>{tr('map.ai')}</li>
+      <li><span class="sym stop-sym x" aria-hidden="true"></span>{tr('map.interchange')}</li>
+    </ul>
+  </div>
+
+  <ol class="lines">
+    {lines.map((line) => (
+      <li class:list={['line', `line-${line.n}`]}>
+        <div class="head">
+          <span class="plaque" aria-hidden="true">{line.code}</span>
+          <div>
+            <h3>
+              <a href={projectPath(lang, line.slug)}>
+                <span class="sr-only">{tr('map.line.name')} {line.n}: </span>{line.project.data.title}&nbsp;<Arrow />
+              </a>
+            </h3>
+            {line.project.data.draft && <p class="draft">{tr('project.draft')}</p>}
+            <p>{line.project.data.summary}</p>
+          </div>
+        </div>
+        <details class="stops-wrap" open>
+          <summary>{tr('map.stops')} <span class="count">{line.stops.length}</span></summary>
+          <ol class="stops" aria-label={`${tr('map.stops')}, ${line.code}`}>
+            {line.stops.map((stop) => (
+              <li
+                class:list={['stop', { ai: stop.ai, x: stop.also.length > 0 }]}
+                data-st={stop.key}
+                style={`--col: ${stop.col + 1}; --span: ${stop.span}`}
+                tabindex={stop.also.length > 0 ? 0 : undefined}
+              >
+                <span class="dot" aria-hidden="true"></span>
+                <span class="name">
+                  {stop.label}
+                  {stop.ai && <span class="sr-only"> ({tr('map.ai')})</span>}
+                  {stop.also.length > 0 && (
+                    <span class="also">
+                      <span class="sr-only">{tr('map.also')} {stop.also.map((n) => `L${n}`).join(', ')}</span>
+                      {stop.also.map((n) => <span class:list={['plaque', 'small', `line-${n}`]} aria-hidden="true">L{n}</span>)}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </details>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  // En móvil se sigue una sola línea: abrir una cierra las demás. En escritorio, todas abiertas.
+  const narrow = window.matchMedia('(max-width: 63.99rem)');
+  for (const map of document.querySelectorAll<HTMLElement>('[data-map]')) {
+    const groups = [...map.querySelectorAll<HTMLDetailsElement>('.stops-wrap')];
+    const sync = () => groups.forEach((d, i) => (d.open = narrow.matches ? i === 0 : true));
+    sync();
+    narrow.addEventListener('change', sync);
+    for (const d of groups) {
+      d.addEventListener('toggle', () => {
+        if (narrow.matches && d.open) groups.forEach((o) => o !== d && (o.open = false));
+        if (!narrow.matches && !d.open) d.open = true;
+      });
+    }
+
+    // Correspondencias: al pasar por una, se resalta la misma estación en las otras líneas.
+    const lines = map.querySelector('.lines');
+    for (const stop of map.querySelectorAll<HTMLElement>('.stop.x')) {
+      const same = map.querySelectorAll(`.stop[data-st="${CSS.escape(stop.dataset.st ?? '')}"]`);
+      const on = () => {
+        same.forEach((s) => s.classList.add('lit'));
+        lines?.classList.add('has-lit');
+      };
+      const off = () => {
+        same.forEach((s) => s.classList.remove('lit'));
+        lines?.classList.remove('has-lit');
+      };
+      stop.addEventListener('pointerenter', on);
+      stop.addEventListener('pointerleave', off);
+      stop.addEventListener('focus', on);
+      stop.addEventListener('blur', off);
+    }
+  }
+</script>
+
+<style>
+  /* Leyenda: qué significa cada marca. */
+  /* Cabecera del bloque y leyenda: lado a lado en pantallas anchas para que el plano entre antes. */
+  .map-top {
+    display: grid;
+    gap: var(--space-4) var(--space-8);
+    margin-bottom: var(--space-6);
+  }
+
+  .map-top :global(h2) {
+    margin: 0 0 var(--space-2);
+  }
+
+  .map-top :global(p) {
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  @media (min-width: 64rem) {
+    .map-top {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+
+  @media (min-width: 64rem) {
+    .legend {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: var(--space-1) var(--space-6);
+    }
+  }
+
+  .legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* La leyenda dibuja sus marcas en un color de línea, como en el plano. */
+  .sym {
+    --line: var(--l1);
+    flex: none;
+  }
+
+  .sym.track {
+    width: 1.75rem;
+    height: var(--track);
+    border-radius: var(--track);
+    background: var(--line);
+  }
+
+  .stop-sym,
+  .dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 0.25rem solid var(--line);
+  }
+
+  .stop-sym.ai,
+  .ai .dot {
+    background: var(--line);
+  }
+
+  .stop-sym.x,
+  .x .dot {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-color: var(--ink);
+  }
+
+  .lines {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
+  }
+
+  .line {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--rule);
+    transition: opacity 220ms var(--ease-out);
+  }
+
+  .head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .head h3 {
+    margin: 0.3rem 0 var(--space-2);
+    font-size: 1.375rem;
+  }
+
+  .head a {
+    display: inline-block;
+    padding-block: 0.45rem;
+    margin-block: -0.45rem;
+    text-decoration: none;
+  }
+
+  .head a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-decoration-thickness: 3px;
+  }
+
+  .head p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+    max-width: 34rem;
+  }
+
+  .head .draft {
+    display: inline-block;
+    margin: 0 0 var(--space-2);
+    padding: 0.15rem 0.4rem 0;
+    border: 1px solid var(--ink-2);
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  /* Móvil: tira vertical, como el diagrama de encima de las puertas. */
+  summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    margin-inline-start: 3rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: -0.2rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 200ms var(--ease-out);
+  }
+
+  details[open] > summary::after {
+    margin-top: 0.2rem;
+    transform: rotate(-135deg);
+  }
+
+  .stops {
+    position: relative;
+    margin: var(--space-2) 0 0;
+    padding: 0 0 0 3rem;
+    list-style: none;
+  }
+
+  /* Trazo vertical entre el centro de la primera y de la última estación (x = 1.125rem). */
+  .stops::before {
+    content: '';
+    position: absolute;
+    inset-block: 1.375rem;
+    left: 0.875rem;
+    width: var(--track);
+    border-radius: var(--track);
+    background: var(--line);
+  }
+
+  .stop {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .dot {
+    position: absolute;
+    left: calc(-3rem + 1.125rem - 0.5rem);
+    top: calc(50% - 0.5rem);
+  }
+
+  .x .dot {
+    left: calc(-3rem + 1.125rem - 0.6875rem);
+    top: calc(50% - 0.6875rem);
+  }
+
+  .name {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    padding-top: 0.15rem;
+  }
+
+  .x .name {
+    font-weight: 700;
+  }
+
+  .also {
+    display: inline-flex;
+    gap: var(--space-1);
+  }
+
+  .count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.15rem 0.375rem 0;
+    border: 2px solid var(--line);
+    border-radius: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  /* Correspondencia resaltada: halo de tinta alrededor del anillo, distinto de la estación de IA. */
+  .lit .dot {
+    box-shadow: 0 0 0 0.1875rem var(--ground), 0 0 0 0.4375rem var(--ink);
+  }
+
+  .stop.x {
+    cursor: default;
+  }
+
+  .stop.x:focus-visible {
+    outline: none;
+  }
+
+  .stop.x:focus-visible .name {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--ink);
+  }
+
+  /* Escritorio: tira horizontal con los nombres a 40 grados, como el plano del vagón. */
+  @media (min-width: 64rem) {
+    .line {
+      grid-template-columns: 17rem 1fr;
+      align-items: end;
+      gap: var(--space-8);
+    }
+
+    .head {
+      align-self: start;
+    }
+
+    summary {
+      display: none;
+    }
+
+    /* Rejilla de columnas iguales: misma distancia entre estaciones en todas las líneas,
+       y cada correspondencia en la misma columna. */
+    .stops {
+      display: grid;
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+      height: 10.5rem;
+      margin: 0 9rem 0 0;
+      padding: 0;
+    }
+
+    .stops::before {
+      display: none;
+    }
+
+    .stop {
+      grid-row: 1;
+      grid-column: var(--col);
+      min-width: 0;
+      height: 100%;
+    }
+
+    /* Tramo de trazo hasta la estación siguiente, que puede estar varias columnas más allá. */
+    .stop:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 0.6875rem;
+      width: calc(var(--span) * 100%);
+      bottom: 0.4375rem;
+      height: var(--track);
+      background: var(--line);
+    }
+    .dot,
+    .x .dot {
+      top: auto;
+      bottom: 0.1875rem;
+      left: 0.1875rem;
+      z-index: 1;
+    }
+
+    .x .dot {
+      bottom: 0;
+      left: 0;
+    }
+
+    .name {
+      position: absolute;
+      left: 0.5rem;
+      bottom: 1.875rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      font-size: 0.9375rem;
+      transform: rotate(-40deg);
+      transform-origin: 0 100%;
+    }
+  }
+
+  @media (hover: hover) and (min-width: 64rem) {
+    .lines:not(.has-lit):has(.line:hover, .line:focus-within) .line:not(:hover, :focus-within),
+    .lines.has-lit .line:not(:has(.lit)) {
+      opacity: 0.32;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .line,
+    summary::after {
+      transition: none;
+    }
+  }
+</style>
+
+
+

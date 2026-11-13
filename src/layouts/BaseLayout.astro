@@ -9,9 +9,15 @@ interface Props {
   description?: string;
   /** Ruta equivalente en el otro idioma (por defecto, su inicio). */
   altPath?: string;
+  /** Contenedor ancho (el plano de la portada). */
+  wide?: boolean;
+  /** Sección actual, para marcarla en la navegación. */
+  current?: 'projects' | 'howiwork';
+  /** Línea del proyecto: colorea la banda de cabecera y los enlaces de la página. */
+  line?: number;
 }
 
-const { lang, title, description, altPath } = Astro.props;
+const { lang, title, description, altPath, wide = false, current, line } = Astro.props;
 const tr = t(lang);
 const other = otherLang(lang);
 const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
@@ -37,31 +43,42 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
   </head>
-  <body>
+  <body class:list={[line && `line-${line}`]}>
     <a class="skip-link" href="#main">{tr('nav.skip')}</a>
-    <header class="site-header">
-      <nav class="container nav" aria-label={lang === 'es' ? 'Principal' : 'Main'}>
+    <header class:list={['band', { 'has-line': line }]}>
+      <nav class:list={['container', 'nav', { wide }]} aria-label={lang === 'es' ? 'Principal' : 'Main'}>
         <a class="brand" href={homePath(lang)}>{SITE.name}</a>
         <ul class="nav-links">
-          <li><a href={projectsPath(lang)}>{tr('nav.projects')}</a></li>
-          <li><a href={howIWorkPath(lang)}>{tr('nav.howiwork')}</a></li>
+          <li><a href={projectsPath(lang)} aria-current={current === 'projects' ? 'true' : undefined}>{tr('nav.projects')}</a></li>
+          <li><a href={howIWorkPath(lang)} aria-current={current === 'howiwork' ? 'page' : undefined}>{tr('nav.howiwork')}</a></li>
           <li><a href={`${homePath(lang)}#contact`}>{tr('nav.contact')}</a></li>
-          <li><a href={alternate.pathname} hreflang={other} lang={other}>{LANGS[other]}</a></li>
+          <li><a class="lang" href={alternate.pathname} hreflang={other} lang={other}>{LANGS[other]}</a></li>
         </ul>
       </nav>
     </header>
-    <main id="main" class="container">
+    <main id="main" class:list={['container', { wide }]}>
       <slot />
     </main>
-    <footer class="container site-footer muted">
+    <footer class:list={['container', 'site-footer', { wide }]}>
       <p>© {new Date().getFullYear()} {SITE.name}</p>
     </footer>
   </body>
 </html>
 
 <style>
-  .site-header {
-    border-bottom: 1px solid var(--border);
+  /* Banda de estación: tinta con el texto en el color del fondo. */
+  .band {
+    background: var(--band);
+    color: var(--on-band);
+  }
+
+  /* En un caso de estudio, la banda lleva debajo la franja del color de su línea. */
+  .band.has-line {
+    box-shadow: inset 0 -0.375rem 0 var(--line);
+  }
+
+  .band.has-line .nav {
+    padding-bottom: calc(var(--space-1) + 0.375rem);
   }
 
   .nav {
@@ -69,38 +86,69 @@ const alternate = new URL(altPath ?? homePath(other), Astro.site);
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-2) var(--space-4);
-    padding-block: var(--space-3);
+    column-gap: var(--space-6);
+    padding-block: var(--space-1);
+  }
+
+  .band a {
+    --line: var(--on-band);
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .band a:hover,
+  .band a[aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+  }
+
+  .band :focus-visible {
+    outline-color: var(--on-band);
   }
 
   .brand {
     font-weight: 700;
-    color: var(--text);
-    text-decoration: none;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
   }
 
   .nav-links {
     display: flex;
-    gap: var(--space-4);
-    margin: 0;
+    flex-wrap: wrap;
+    column-gap: var(--space-4);
+    margin: 0 0 0 calc(-1 * var(--space-1));
     padding: 0;
     list-style: none;
+    font-size: 0.9375rem;
   }
 
-  .nav-links a {
-    display: inline-block;
-    min-height: 2.75rem;
-    padding-block: var(--space-2);
-    line-height: 1.75rem;
+  @media (min-width: 40rem) {
+    .nav-links {
+      column-gap: var(--space-6);
+      margin: 0;
+    }
+  }
+
+  .lang {
+    font-weight: 700;
   }
 
   main {
-    padding-block: var(--space-8) var(--space-12);
+    flex: 1;
+    padding-block: var(--space-12) var(--space-16);
   }
 
   .site-footer {
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--border);
     font-size: 0.875rem;
+    color: var(--ink-2);
+  }
+
+  .site-footer p {
+    margin: 0;
+    padding-block: var(--space-6) var(--space-8);
+    border-top: 2px solid var(--ink);
   }
 </style>

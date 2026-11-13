@@ -1,0 +1,552 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-12T20:59:10.743Z",
+  "title": "Design System: Xavi Clotet · Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Suelo frío",
+        "canonical": "oklch(96% 0.004 250)",
+        "tonalRamp": [
+          "oklch(15% 0.001 250)",
+          "oklch(26% 0.002 250)",
+          "oklch(38% 0.003 250)",
+          "oklch(50% 0.004 250)",
+          "oklch(62% 0.004 250)",
+          "oklch(74% 0.003 250)",
+          "oklch(85% 0.002 250)",
+          "oklch(95% 0.001 250)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel de estación",
+        "canonical": "oklch(99.5% 0.002 250)",
+        "tonalRamp": [
+          "oklch(15% 0 250)",
+          "oklch(26% 0.001 250)",
+          "oklch(38% 0.001 250)",
+          "oklch(50% 0.002 250)",
+          "oklch(62% 0.002 250)",
+          "oklch(74% 0.001 250)",
+          "oklch(85% 0.001 250)",
+          "oklch(95% 0 250)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "oklch(21% 0.02 262)",
+        "tonalRamp": [
+          "oklch(15% 0.003 262)",
+          "oklch(26% 0.008 262)",
+          "oklch(38% 0.014 262)",
+          "oklch(50% 0.02 262)",
+          "oklch(62% 0.019 262)",
+          "oklch(74% 0.013 262)",
+          "oklch(85% 0.007 262)",
+          "oklch(95% 0.003 262)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Tinta secundaria",
+        "canonical": "oklch(43% 0.02 262)",
+        "tonalRamp": [
+          "oklch(15% 0.003 262)",
+          "oklch(26% 0.008 262)",
+          "oklch(38% 0.014 262)",
+          "oklch(50% 0.02 262)",
+          "oklch(62% 0.019 262)",
+          "oklch(74% 0.013 262)",
+          "oklch(85% 0.007 262)",
+          "oklch(95% 0.003 262)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "oklch(86% 0.008 262)",
+        "tonalRamp": [
+          "oklch(15% 0.001 262)",
+          "oklch(26% 0.003 262)",
+          "oklch(38% 0.006 262)",
+          "oklch(50% 0.008 262)",
+          "oklch(62% 0.008 262)",
+          "oklch(74% 0.005 262)",
+          "oklch(85% 0.003 262)",
+          "oklch(95% 0.001 262)"
+        ]
+      },
+      "line-1": {
+        "role": "primary",
+        "displayName": "Rojo de línea 1",
+        "canonical": "oklch(52% 0.2 27)",
+        "tonalRamp": [
+          "oklch(15% 0.03 27)",
+          "oklch(26% 0.08 27)",
+          "oklch(38% 0.14 27)",
+          "oklch(50% 0.2 27)",
+          "oklch(62% 0.19 27)",
+          "oklch(74% 0.13 27)",
+          "oklch(85% 0.075 27)",
+          "oklch(95% 0.03 27)"
+        ]
+      },
+      "line-2": {
+        "role": "primary",
+        "displayName": "Morado de línea 2",
+        "canonical": "oklch(46% 0.17 320)",
+        "tonalRamp": [
+          "oklch(15% 0.026 320)",
+          "oklch(26% 0.068 320)",
+          "oklch(38% 0.119 320)",
+          "oklch(50% 0.17 320)",
+          "oklch(62% 0.162 320)",
+          "oklch(74% 0.111 320)",
+          "oklch(85% 0.064 320)",
+          "oklch(95% 0.026 320)"
+        ]
+      },
+      "line-3": {
+        "role": "primary",
+        "displayName": "Verde de línea 3",
+        "canonical": "oklch(50% 0.14 150)",
+        "tonalRamp": [
+          "oklch(15% 0.021 150)",
+          "oklch(26% 0.056 150)",
+          "oklch(38% 0.098 150)",
+          "oklch(50% 0.14 150)",
+          "oklch(62% 0.133 150)",
+          "oklch(74% 0.091 150)",
+          "oklch(85% 0.053 150)",
+          "oklch(95% 0.021 150)"
+        ]
+      },
+      "line-4": {
+        "role": "primary",
+        "displayName": "Azul de línea 4",
+        "canonical": "oklch(50% 0.15 250)",
+        "tonalRamp": [
+          "oklch(15% 0.022 250)",
+          "oklch(26% 0.06 250)",
+          "oklch(38% 0.105 250)",
+          "oklch(50% 0.15 250)",
+          "oklch(62% 0.142 250)",
+          "oklch(74% 0.098 250)",
+          "oklch(85% 0.056 250)",
+          "oklch(95% 0.022 250)"
+        ]
+      },
+      "on-line": {
+        "role": "primary",
+        "displayName": "Texto sobre línea",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "ground-dark": {
+        "role": "neutral",
+        "displayName": "Suelo frío (oscuro)",
+        "canonical": "oklch(17% 0.012 262)",
+        "tonalRamp": [
+          "oklch(15% 0.002 262)",
+          "oklch(26% 0.005 262)",
+          "oklch(38% 0.008 262)",
+          "oklch(50% 0.012 262)",
+          "oklch(62% 0.011 262)",
+          "oklch(74% 0.008 262)",
+          "oklch(85% 0.005 262)",
+          "oklch(95% 0.002 262)"
+        ]
+      },
+      "panel-dark": {
+        "role": "neutral",
+        "displayName": "Panel de estación (oscuro)",
+        "canonical": "oklch(21% 0.014 262)",
+        "tonalRamp": [
+          "oklch(15% 0.002 262)",
+          "oklch(26% 0.006 262)",
+          "oklch(38% 0.01 262)",
+          "oklch(50% 0.014 262)",
+          "oklch(62% 0.013 262)",
+          "oklch(74% 0.009 262)",
+          "oklch(85% 0.005 262)",
+          "oklch(95% 0.002 262)"
+        ]
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Tinta (oscuro)",
+        "canonical": "oklch(95% 0.005 262)",
+        "tonalRamp": [
+          "oklch(15% 0.001 262)",
+          "oklch(26% 0.002 262)",
+          "oklch(38% 0.003 262)",
+          "oklch(50% 0.005 262)",
+          "oklch(62% 0.005 262)",
+          "oklch(74% 0.003 262)",
+          "oklch(85% 0.002 262)",
+          "oklch(95% 0.001 262)"
+        ]
+      },
+      "ink-2-dark": {
+        "role": "neutral",
+        "displayName": "Tinta secundaria (oscuro)",
+        "canonical": "oklch(75% 0.012 262)",
+        "tonalRamp": [
+          "oklch(15% 0.002 262)",
+          "oklch(26% 0.005 262)",
+          "oklch(38% 0.008 262)",
+          "oklch(50% 0.012 262)",
+          "oklch(62% 0.011 262)",
+          "oklch(74% 0.008 262)",
+          "oklch(85% 0.005 262)",
+          "oklch(95% 0.002 262)"
+        ]
+      },
+      "rule-dark": {
+        "role": "neutral",
+        "displayName": "Filete (oscuro)",
+        "canonical": "oklch(33% 0.012 262)",
+        "tonalRamp": [
+          "oklch(15% 0.002 262)",
+          "oklch(26% 0.005 262)",
+          "oklch(38% 0.008 262)",
+          "oklch(50% 0.012 262)",
+          "oklch(62% 0.011 262)",
+          "oklch(74% 0.008 262)",
+          "oklch(85% 0.005 262)",
+          "oklch(95% 0.002 262)"
+        ]
+      },
+      "band-dark": {
+        "role": "neutral",
+        "displayName": "Banda oscura",
+        "canonical": "oklch(24% 0.016 262)",
+        "tonalRamp": [
+          "oklch(15% 0.002 262)",
+          "oklch(26% 0.006 262)",
+          "oklch(38% 0.011 262)",
+          "oklch(50% 0.016 262)",
+          "oklch(62% 0.015 262)",
+          "oklch(74% 0.01 262)",
+          "oklch(85% 0.006 262)",
+          "oklch(95% 0.002 262)"
+        ]
+      },
+      "line-1-dark": {
+        "role": "primary",
+        "displayName": "Rojo de línea 1 (oscuro)",
+        "canonical": "oklch(70% 0.17 27)",
+        "tonalRamp": [
+          "oklch(15% 0.026 27)",
+          "oklch(26% 0.068 27)",
+          "oklch(38% 0.119 27)",
+          "oklch(50% 0.17 27)",
+          "oklch(62% 0.162 27)",
+          "oklch(74% 0.111 27)",
+          "oklch(85% 0.064 27)",
+          "oklch(95% 0.026 27)"
+        ]
+      },
+      "line-2-dark": {
+        "role": "primary",
+        "displayName": "Morado de línea 2 (oscuro)",
+        "canonical": "oklch(70% 0.14 320)",
+        "tonalRamp": [
+          "oklch(15% 0.021 320)",
+          "oklch(26% 0.056 320)",
+          "oklch(38% 0.098 320)",
+          "oklch(50% 0.14 320)",
+          "oklch(62% 0.133 320)",
+          "oklch(74% 0.091 320)",
+          "oklch(85% 0.053 320)",
+          "oklch(95% 0.021 320)"
+        ]
+      },
+      "line-3-dark": {
+        "role": "primary",
+        "displayName": "Verde de línea 3 (oscuro)",
+        "canonical": "oklch(74% 0.15 150)",
+        "tonalRamp": [
+          "oklch(15% 0.022 150)",
+          "oklch(26% 0.06 150)",
+          "oklch(38% 0.105 150)",
+          "oklch(50% 0.15 150)",
+          "oklch(62% 0.142 150)",
+          "oklch(74% 0.098 150)",
+          "oklch(85% 0.056 150)",
+          "oklch(95% 0.022 150)"
+        ]
+      },
+      "line-4-dark": {
+        "role": "primary",
+        "displayName": "Azul de línea 4 (oscuro)",
+        "canonical": "oklch(72% 0.13 245)",
+        "tonalRamp": [
+          "oklch(15% 0.019 245)",
+          "oklch(26% 0.052 245)",
+          "oklch(38% 0.091 245)",
+          "oklch(50% 0.13 245)",
+          "oklch(62% 0.123 245)",
+          "oklch(74% 0.085 245)",
+          "oklch(85% 0.049 245)",
+          "oklch(95% 0.019 245)"
+        ]
+      },
+      "on-line-dark": {
+        "role": "primary",
+        "displayName": "Texto sobre línea (oscuro)",
+        "canonical": "oklch(17% 0.012 262)",
+        "tonalRamp": [
+          "oklch(15% 0.002 262)",
+          "oklch(26% 0.005 262)",
+          "oklch(38% 0.008 262)",
+          "oklch(50% 0.012 262)",
+          "oklch(62% 0.011 262)",
+          "oklch(74% 0.008 262)",
+          "oklch(85% 0.005 262)",
+          "oklch(95% 0.002 262)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titular de la portada, máximo 18ch."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "h1 de un caso, de «Cómo trabajo» y del 404."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Títulos de bloque de la portada."
+      },
+      "title-station": {
+        "displayName": "Title station",
+        "purpose": "Nombre de cada línea en el plano y cada estación (h2) de un recorrido."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Entradas bajo el titular, en tinta secundaria, máximo 38rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido con cifras tabulares; prosa larga hasta 68ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Enlaces de acción, desplegable de estaciones y códigos de placa."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Leyenda del plano y pie."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Solo `code` dentro de la prosa; nunca como disfraz de terminal."
+      }
+    },
+    "shadows": [
+      {
+        "name": "line-stripe",
+        "value": "inset 0 -0.375rem 0 var(--line)",
+        "purpose": "Franja del color de la línea bajo la banda de estación en un caso. Marca plana, no elevación."
+      },
+      {
+        "name": "terminus-ring",
+        "value": "0 0 0 0.25rem var(--ground)",
+        "purpose": "Anillo de fondo alrededor del final de línea de un recorrido."
+      },
+      {
+        "name": "interchange-halo",
+        "value": "0 0 0 0.1875rem var(--ground), 0 0 0 0.4375rem var(--ink)",
+        "purpose": "Halo de tinta de una correspondencia resaltada en el plano."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Curva única de las transiciones."
+      },
+      {
+        "name": "line-dim",
+        "value": "opacity 220ms ease-out → 0.32",
+        "purpose": "Con puntero y desde 64rem, atenúa las líneas que no se pasan o enfocan, o las que no tienen la correspondencia resaltada. Sin transición bajo prefers-reduced-motion."
+      },
+      {
+        "name": "chevron",
+        "value": "transform 200ms ease-out",
+        "purpose": "Giro del chevrón del desplegable de estaciones en móvil. Sin transición bajo prefers-reduced-motion."
+      },
+      {
+        "name": "sign-hover",
+        "value": "background-color 180ms ease-out",
+        "purpose": "Aclarado del botón señal al pasar."
+      },
+      {
+        "name": "interchange-halo",
+        "value": "instantáneo",
+        "purpose": "El halo de correspondencia aparece sin animación."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "52rem"
+      },
+      {
+        "name": "map",
+        "value": "64rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Banda de estación",
+      "kind": "nav",
+      "refersTo": "station-band",
+      "description": "Cabecera a lo ancho en tinta con marca y enlaces; aria-current subrayado; en un caso, franja del color de la línea.",
+      "html": "<header class=\"ds-band ds-has-line\"><nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">Xavi Clotet</a><ul><li><a href=\"#\" aria-current=\"true\">Proyectos</a></li><li><a href=\"#\">Cómo trabajo</a></li><li><a href=\"#\">Contacto</a></li><li><a href=\"#\" style=\"font-weight:700\">EN</a></li></ul></nav></header>",
+      "css": ".ds-band { --line: var(--l1); background: var(--band); color: var(--on-band); font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); } .ds-band.ds-has-line { box-shadow: inset 0 -0.375rem 0 var(--line); } .ds-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 1.5rem; padding: 0.25rem 1rem 0.625rem; } .ds-nav ul { display: flex; flex-wrap: wrap; column-gap: 1.5rem; margin: 0; padding: 0; list-style: none; font-size: 0.9375rem; } .ds-band a { display: inline-flex; align-items: center; min-height: 2.75rem; color: inherit; text-decoration: none; } .ds-brand { font-weight: 700; font-size: 1.125rem; letter-spacing: -0.01em; } .ds-band a:hover, .ds-band a[aria-current] { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 0.22em; } .ds-band a:focus-visible { outline: 3px solid var(--on-band); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Botón señal",
+      "kind": "button",
+      "refersTo": "button-sign",
+      "description": "Acción principal (escribir por correo): placa sólida en tinta con flecha.",
+      "html": "<a class=\"ds-btn-sign\" href=\"#\">Escríbeme <svg class=\"ds-arrow\" viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M3 10h13M11 4.5 16.5 10 11 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"/></svg></a>",
+      "css": ".ds-btn-sign { display: inline-flex; align-items: center; gap: 0.75rem; min-height: 3.25rem; padding: 0.2rem 1.5rem 0; background: var(--ink); color: var(--ground); border-radius: 0.375rem; font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); font-weight: 700; font-size: 1.125rem; text-decoration: none; transition: background-color 180ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-sign:hover { background: color-mix(in oklch, var(--ink) 82%, var(--ground)); } .ds-btn-sign:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; } .ds-arrow { flex: none; width: 1.1em; height: 1.1em; vertical-align: -0.15em; }"
+    },
+    {
+      "name": "Enlace de acción",
+      "kind": "button",
+      "refersTo": "link-go",
+      "description": "Acción secundaria sin fondo: 700, subrayado en el color de la línea y flecha.",
+      "html": "<a class=\"ds-go\" href=\"#\">Ver las líneas <svg class=\"ds-arrow\" viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M3 10h13M11 4.5 16.5 10 11 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"/></svg></a>",
+      "css": ".ds-go { --line: var(--ink); display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); font-weight: 700; color: var(--ink); text-decoration-thickness: 2px; text-decoration-color: var(--line); text-underline-offset: 0.22em; } .ds-go:hover { text-decoration-thickness: 3px; } .ds-go:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 2px; } .ds-arrow { flex: none; width: 1.1em; height: 1.1em; vertical-align: -0.15em; }"
+    },
+    {
+      "name": "Placa de línea",
+      "kind": "custom",
+      "refersTo": "plaque",
+      "description": "Código de línea en un círculo del color de la línea; tamaños 1.5, 2.25 y 3.5rem.",
+      "html": "<span class=\"ds-plaque ds-small\" style=\"--line: var(--l2)\">L2</span> <span class=\"ds-plaque\" style=\"--line: var(--l1)\">L1</span> <span class=\"ds-plaque ds-large\" style=\"--line: var(--l4)\">L4</span>",
+      "css": ".ds-plaque { display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--line); color: var(--on-line); font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); font-weight: 700; font-size: 0.9375rem; line-height: 1; padding-top: 0.15em; vertical-align: middle; } .ds-plaque.ds-small { width: 1.5rem; height: 1.5rem; font-size: 0.6875rem; } .ds-plaque.ds-large { width: 3.5rem; height: 3.5rem; font-size: 1.375rem; }"
+    },
+    {
+      "name": "Línea del plano",
+      "kind": "custom",
+      "refersTo": "station-stop",
+      "description": "Una línea del plano: placa, nombre enlazado y trazo con estación normal, de IA y correspondencia.",
+      "html": "<div class=\"ds-line\"><div class=\"ds-head\"><span class=\"ds-pl\">L1</span><a href=\"#\">Scorekinole <svg class=\"ds-arrow\" viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M3 10h13M11 4.5 16.5 10 11 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"/></svg></a></div><ol class=\"ds-stops\"><li><span class=\"ds-dot ds-ai\"></span>LLM</li><li class=\"ds-x\" tabindex=\"0\"><span class=\"ds-dot\"></span><b>Angular</b></li><li><span class=\"ds-dot\"></span>Firebase</li></ol></div>",
+      "css": ".ds-line { --line: var(--l1); font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); color: var(--ink); border-top: 2px solid var(--ink); padding-block: 1.5rem; } .ds-head { display: flex; align-items: center; gap: 0.75rem; } .ds-pl { display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--line); color: var(--on-line); font-weight: 700; font-size: 0.9375rem; padding-top: 0.15em; } .ds-head a { font-weight: 700; font-size: 1.375rem; color: inherit; text-decoration: none; display: inline-flex; gap: 0.25rem; align-items: center; } .ds-head a:hover { text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 3px; } .ds-stops { position: relative; list-style: none; margin: 0.5rem 0 0; padding: 0 0 0 3rem; } .ds-stops::before { content: ''; position: absolute; inset-block: 1.375rem; left: 0.875rem; width: 0.5rem; border-radius: 0.5rem; background: var(--line); } .ds-stops li { position: relative; display: flex; align-items: center; min-height: 2.75rem; } .ds-dot { position: absolute; left: -2.375rem; top: calc(50% - 0.5rem); width: 1rem; height: 1rem; border-radius: 50%; background: var(--panel); border: 0.25rem solid var(--line); box-sizing: border-box; } .ds-dot.ds-ai { background: var(--line); } .ds-x .ds-dot { left: -2.5625rem; top: calc(50% - 0.6875rem); width: 1.375rem; height: 1.375rem; border-color: var(--ink); } .ds-x:hover .ds-dot, .ds-x:focus-visible .ds-dot { box-shadow: 0 0 0 0.1875rem var(--ground), 0 0 0 0.4375rem var(--ink); } .ds-x:focus-visible { outline: none; } .ds-x:focus-visible b { text-decoration: underline; text-decoration-thickness: 3px; } .ds-arrow { flex: none; width: 1.1em; height: 1.1em; vertical-align: -0.15em; }"
+    },
+    {
+      "name": "Recorrido",
+      "kind": "custom",
+      "refersTo": "station-interchange",
+      "description": "Texto largo colgado de un trazo vertical; cada h2 es una estación y el último, el final de línea en tinta.",
+      "html": "<div class=\"ds-route\"><h2>Contexto</h2><p>Un párrafo del caso de estudio.</p><h2>Qué haría distinto</h2><p>El final de línea.</p></div>",
+      "css": ".ds-route { --line: var(--l3); position: relative; padding-inline-start: 2.5rem; font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); color: var(--ink); line-height: 1.6; } .ds-route::before { content: ''; position: absolute; inset-block: 0.75rem 0; inset-inline-start: 0.625rem; width: 0.5rem; background: var(--line); border-radius: 0.5rem; } .ds-route h2 { position: relative; margin: 2rem 0 0.75rem; font-size: 1.375rem; line-height: 1.1; letter-spacing: -0.015em; } .ds-route h2:first-child { margin-top: 0; } .ds-route h2::before { content: ''; position: absolute; inset-inline-start: -2.375rem; top: 0; width: 1.5rem; height: 1.5rem; box-sizing: border-box; border-radius: 50%; background: var(--panel); border: 0.3125rem solid var(--line); } .ds-route h2:last-of-type::before { background: var(--ink); border-color: var(--ink); box-shadow: 0 0 0 0.25rem var(--ground); }"
+    },
+    {
+      "name": "Siguiente línea",
+      "kind": "nav",
+      "refersTo": "plaque",
+      "description": "Transbordo al siguiente caso: trazo en el color de la siguiente línea, placa, nombre y flecha.",
+      "html": "<nav class=\"ds-next\"><a href=\"#\"><span class=\"ds-next-label\">Siguiente línea</span><span class=\"ds-next-line\"><span class=\"ds-pl\">L2</span><span class=\"ds-t\">Gospel Vallès</span><svg class=\"ds-arrow\" viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M3 10h13M11 4.5 16.5 10 11 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\"/></svg></span></a></nav>",
+      "css": ".ds-next { --line: var(--l2); font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); } .ds-next a { display: grid; gap: 0.5rem; padding: 1.5rem 0; border-top: 0.5rem solid var(--line); color: var(--ink); text-decoration: none; } .ds-next-label { font-size: 0.9375rem; color: var(--ink-2); } .ds-next-line { display: inline-flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: clamp(1.375rem, 4vw, 1.75rem); } .ds-pl { display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--line); color: var(--on-line); font-size: 0.9375rem; padding-top: 0.15em; } .ds-next a:hover .ds-t { text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 3px; } .ds-next a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; } .ds-arrow { flex: none; width: 1.1em; height: 1.1em; vertical-align: -0.15em; }"
+    },
+    {
+      "name": "Aviso del andén",
+      "kind": "card",
+      "refersTo": "notice-board",
+      "description": "«Ahora mismo»: bloque en banda con avisos separados por filetes; único bloque con fondo propio.",
+      "html": "<section class=\"ds-notice\"><h2>Ahora mismo</h2><ul><li>Primer aviso.</li><li>Segundo aviso.</li><li>Tercer aviso.</li></ul></section>",
+      "css": ".ds-notice { padding: 1.5rem 1rem; background: var(--band); color: var(--on-band); border-radius: 0.5rem; font-family: var(--font, 'Overpass', ui-sans-serif, system-ui, sans-serif); } .ds-notice h2 { margin: 0 0 1rem; font-size: 1.25rem; font-weight: 700; } .ds-notice ul { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; } .ds-notice li { padding-top: 0.75rem; border-top: 2px solid color-mix(in oklch, var(--on-band) 35%, transparent); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El plano de la red",
+    "overview": "La web es un plano de transporte. Cada proyecto es una línea con su número (L1–L4, según su `order`), su color y su placa redonda; sus tecnologías e IA son estaciones sobre un trazo grueso, y lo que comparten varias líneas son correspondencias con anillo de tinta. El lector no ve una galería de proyectos, sino un sistema conectado por decisiones y herramientas reales.\n\nEl material es señalética: un fondo gris frío y plano, tinta casi negra, una cabecera que es una banda de estación en tinta y una sola familia (Overpass) en dos pesos. Todo el color se gasta en las cuatro líneas; el resto de la página es tinta, filetes y espacio. La densidad es la de un plano legible de pie en el andén: pocas marcas, cada una con un significado fijado en la leyenda.\n\nEl movimiento es mínimo y funcional: al pasar o enfocar una línea las demás se atenúan, y al pasar por una correspondencia se resalta la misma estación en las otras líneas. Se rechazan los degradados decorativos, el neón sobre negro, el disfraz de terminal o monoespaciada, las rejillas de tarjetas, las pastillas de tags y los antetítulos.",
+    "keyCharacteristics": [
+      "Un fondo plano frío, tinta y cuatro colores de línea; nada más lleva color.",
+      "Overpass autoalojada, solo pesos 400 y 700, cifras tabulares.",
+      "El trazo (0.5rem) es la unidad gráfica: líneas, recorridos, filetes de cabecera de caso y el final de línea.",
+      "Placas redondas con el código de línea en blanco (claro) o en el color del fondo (oscuro).",
+      "Plano de escritorio a partir de 64rem; en móvil, una tira vertical por línea y se sigue una sola a la vez.",
+      "Objetivos táctiles de al menos 44px y foco de 3px en tinta."
+    ],
+    "rules": [
+      {
+        "name": "The Four Lines Rule",
+        "body": "El color solo existe en las cuatro líneas. Fondo, superficies, botones y texto son tinta o neutros; si un elemento lleva color, es porque pertenece a una línea.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Ground Rule",
+        "body": "Hay un solo fondo plano. Nada de superficies elevadas, degradados ni bloques de color de fondo; la única excepción es la banda de tinta (cabecera y aviso «Ahora mismo»).",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Weights Rule",
+        "body": "Overpass solo en 400 y 700. Nada de mayúsculas espaciadas ni de una segunda familia para dar carácter.",
+        "section": "typography"
+      },
+      {
+        "name": "The Drawn Dot Rule",
+        "body": "El «·» de Overpass no queda centrado: los separadores en línea se dibujan como un punto redondo de 0.3em, nunca con el carácter.",
+        "section": "typography"
+      },
+      {
+        "name": "The Shared Column Rule",
+        "body": "En el plano de escritorio, una estación compartida ocupa la misma columna en todas las líneas que pasan por ella; los tramos se alargan para llegar, nunca se mueve la estación.",
+        "section": "layout"
+      },
+      {
+        "name": "The One Lane Rule",
+        "body": "En móvil se sigue una línea cada vez: abrir una cierra las demás.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Plan Rule",
+        "body": "Un plano no tiene sombras. Si algo necesita separarse, lleva un filete o un anillo dibujado, nunca una sombra difusa.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** asignar el color de un proyecto solo con `line-N` (variable `--line`) y usarlo en trazo, estaciones, placa, marcadores y subrayados.",
+      "**Do** usar el trazo de 0.5rem con extremos redondeados para cualquier línea, recorrido o filete de cabecera de un caso.",
+      "**Do** mantener cada objetivo táctil en al menos 2.75rem (44px) de alto.",
+      "**Do** dejar el foco visible con el contorno global de 3px en tinta y 3px de separación (en la banda, en el color de su texto).",
+      "**Do** comprobar AA en claro y oscuro al añadir un color de línea: al menos 4.5:1 de la línea sobre el fondo y del texto de la placa sobre la línea.",
+      "**Do** quitar cualquier transición nueva bajo `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "**Don't** usar degradados de color; el único `repeating-linear-gradient` del sistema dibuja con cortes duros el tramo discontinuo del 404.",
+      "**Don't** usar neón sobre negro ni el disfraz de terminal o de monoespaciada; la monoespaciada es solo para `code`.",
+      "**Don't** montar rejillas de tarjetas con caja, sombra o fondo propio; los bloques se separan con filetes.",
+      "**Don't** mostrar tecnologías como pastillas de tags; son estaciones sobre una línea o puntos en una lista.",
+      "**Don't** poner antetítulos ni mayúsculas espaciadas sobre los títulos.",
+      "**Don't** añadir un quinto color decorativo ni teñir fondos con los colores de línea.",
+      "**Don't** usar sombras para dar profundidad."
+    ]
+  }
+}

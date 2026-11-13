@@ -13,27 +13,42 @@ if (!page) throw new Error(`Falta src/content/pages/${lang}/como-trabajo.md`);
 const { Content } = await render(page);
 ---
 
-<BaseLayout lang={lang} title={page.data.title} description={page.data.summary} altPath={howIWorkPath(otherLang(lang))}>
+<BaseLayout lang={lang} title={page.data.title} description={page.data.summary} altPath={howIWorkPath(otherLang(lang))} current="howiwork">
   <article>
-    <h1>{page.data.title}</h1>
-    <div class="prose">
+    <header class="head">
+      <h1>{page.data.title}</h1>
+      <p class="lead">{page.data.summary}</p>
+    </header>
+    <div class="route prose">
       <Content />
     </div>
   </article>
 </BaseLayout>
 
 <style>
+  .head {
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-12);
+    border-bottom: var(--track) solid var(--ink);
+  }
+
   h1 {
     margin: 0 0 var(--space-4);
-    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    font-size: clamp(2.25rem, 8vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
   }
 
-  .prose :global(h2) {
-    margin-top: var(--space-8);
-    font-size: 1.25rem;
+  .lead {
+    margin: 0;
+    font-size: 1.1875rem;
+    color: var(--ink-2);
+    max-width: 38rem;
   }
 
-  .prose :global(li + li) {
-    margin-top: var(--space-2);
+  /* El párrafo de entrada va antes de la primera estación. */
+  .route :global(> p:first-child) {
+    margin-top: 0;
+    font-size: 1.125rem;
   }
 </style>

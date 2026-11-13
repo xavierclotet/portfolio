@@ -1,11 +1,62 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
 import { t } from '../i18n/ui.ts';
 
 const tr = t('es');
 ---
 
 <BaseLayout lang="es" title={tr('notfound.title')}>
-  <h1>{tr('notfound.title')}</h1>
-  <p><a href="/">{tr('notfound.back')}</a></p>
+  <section class="out">
+    <div class="cut" aria-hidden="true"><span></span><span></span></div>
+    <h1>{tr('notfound.title')}</h1>
+    <p class="lead">{tr('notfound.lead')}</p>
+    <p><a class="back" href="/"><Arrow back /> {tr('notfound.back')}</a></p>
+  </section>
 </BaseLayout>
+
+<style>
+  /* Tramo cortado: la línea se interrumpe donde debería estar la estación. */
+  .cut {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: var(--space-8);
+  }
+
+  .cut span {
+    height: var(--track);
+    border-radius: var(--track);
+    background: var(--ink);
+  }
+
+  .cut span:first-child {
+    width: 8rem;
+  }
+
+  .cut span:last-child {
+    width: 3rem;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 0.75rem, transparent 0.75rem 1.25rem);
+  }
+
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: clamp(2.25rem, 8vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .lead {
+    margin: 0 0 var(--space-6);
+    font-size: 1.1875rem;
+    color: var(--ink-2);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    font-weight: 700;
+  }
+</style>

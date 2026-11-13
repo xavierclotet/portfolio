@@ -35,3 +35,5 @@ pnpm-debug.log*
 .impeccable/hook.pending.json
 .impeccable/config.local.json
 .impeccable/critique/
+.impeccable/review/
+.impeccable/mocks/

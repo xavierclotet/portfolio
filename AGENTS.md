@@ -20,7 +20,8 @@ src/
 ├── content/pages/<es|en>/como-trabajo.md página «Cómo trabajo con IA»
 ├── data/home.ts            «Ahora mismo», skills por área (enlazan al proyecto si está publicado) y experiencia
 ├── lib/projects.ts         lectura de proyectos (filtra borradores fuera de desarrollo)
-├── components/             Home, ProjectCard, ProjectArticle, HowIWork
+├── lib/lines.ts            plano: cada proyecto es una línea (L = `order`), estaciones = `ai` + `stack`, correspondencias = lo compartido
+├── components/             Home, LineMap (el plano), ProjectArticle, HowIWork, Arrow (icono SVG)
 ├── layouts/BaseLayout.astro head, SEO, hreflang, cabecera y pie
 └── pages/                  `/`, `/en/`, `/proyectos/<slug>/`, `/en/projects/<slug>/`, `/como-trabajo/`, `/en/how-i-work/`, 404
 ```
@@ -56,7 +57,8 @@ regeneran con `powershell -ExecutionPolicy Bypass -File .agents/link-skills.ps1`
 
 - **`impeccable`**: al crear o tocar UI. Antes de acabar, pasa el detector contra el servidor de desarrollo:
   `.agents\skills\impeccable\scripts\impeccable.cmd detect http://localhost:<puerto>/` (sobre los ficheros
-  `.astro` solo aplica reglas de texto). Pendiente: `PRODUCT.md` y `DESIGN.md` (`/impeccable init`).
+  `.astro` solo aplica reglas de texto). Contexto: `PRODUCT.md` (producto), `DESIGN.md` (sistema visual: plano
+  de líneas de metro) y el contrato de dirección en `.impeccable/surfaces/`.
 - **`grilling`**: para definir posicionamiento y contenido. Pregunta antes de usarla.
 
 ## Git y deploy
