@@ -29,7 +29,8 @@ src/
 ## Posicionamiento (acordado con Xavi)
 
 - Titular: «Ingeniero frontend senior que construye producto con IA». Público: startups y scale-ups de
-  producto, España o remoto UE, puesto de senior IC.
+  producto, España o remoto UE, puesto de senior IC por cuenta ajena (nunca freelance). No busca
+  activamente, pero está abierto a puestos de AI engineering: el contacto lo dice así.
 - Mensaje principal: lleva IA a producción con criterio (coste, permisos, fallos, evals); de apoyo, el
   desarrollo con agentes y el oficio de frontend.
 - Primera persona, frases cortas, cada afirmación con un ejemplo concreto. Sin palabras de moda.

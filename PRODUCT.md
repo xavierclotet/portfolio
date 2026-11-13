@@ -16,7 +16,9 @@ CV o el perfil de GitHub, y deciden en uno o dos minutos si Xavi merece una entr
 
 Portfolio personal de Xavi Clotet, ingeniero frontend senior que construye producto con IA. Existe para
 demostrar con proyectos reales que lleva IA a producción con criterio. Éxito: el lector adecuado lo
-entiende en una visita corta y escribe por correo o LinkedIn.
+entiende en una visita corta y escribe por correo o LinkedIn. Xavi busca empleo por cuenta ajena, no
+clientes: no busca activamente, pero está abierto a puestos de AI engineering, y ningún texto debe sonar
+a freelance ofreciendo servicios.
 
 ## Positioning
 
