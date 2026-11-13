@@ -18,6 +18,8 @@
   --l2: light-dark(oklch(46% 0.17 320), oklch(70% 0.14 320));
   --l3: light-dark(oklch(50% 0.14 150), oklch(74% 0.15 150));
   --l4: light-dark(oklch(50% 0.15 250), oklch(72% 0.13 245));
+  --l5: light-dark(oklch(55% 0.15 75), oklch(74% 0.13 75));
+  --l6: light-dark(oklch(52% 0.12 200), oklch(72% 0.12 200));
   --on-line: light-dark(oklch(100% 0 0), oklch(17% 0.012 262));
   /* Línea por defecto (páginas sin proyecto): la tinta. */
   --line: var(--ink);
@@ -47,7 +49,8 @@
 .line-1 { --line: var(--l1); }
 .line-2 { --line: var(--l2); }
 .line-3 { --line: var(--l3); }
-.line-4 { --line: var(--l4); }
+.line-5 { --line: var(--l5); }
+.line-6 { --line: var(--l6); }
 
 *,
 *::before,
