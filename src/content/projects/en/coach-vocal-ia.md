@@ -8,6 +8,7 @@ privateCode: true
 access: Private, inside the Gospel Vallès panel
 featured: true
 order: 3
+draft: false
 ---
 
 ## Context

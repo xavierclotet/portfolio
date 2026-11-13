@@ -7,6 +7,7 @@ ai: [Desarrollo con agentes]
 privateCode: true
 access: Herramienta personal, sin publicar
 order: 4
+draft: false
 ---
 
 ## Contexto

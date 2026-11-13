@@ -7,6 +7,7 @@ ai: [WebMCP (agent context), Agentic development]
 links:
   demo: https://scorekinole.es
 order: 1
+draft: false
 ---
 
 ## Context

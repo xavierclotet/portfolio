@@ -8,6 +8,7 @@ links:
   demo: https://gospelvalles.com
 privateCode: true
 order: 2
+draft: false
 ---
 
 ## Contexto

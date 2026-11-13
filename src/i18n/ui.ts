@@ -10,6 +10,7 @@ export const HOWIWORK_SEGMENT: Record<Lang, string> = { es: 'como-trabajo', en: 
 
 export const UI = {
   es: {
+    'meta.title': 'Ingeniero frontend y AI engineering',
     'meta.description': 'Ingeniero frontend senior que construye producto con IA: casos de estudio, decisiones técnicas y cómo trabajo con agentes.',
     'nav.projects': 'Proyectos',
     'nav.howiwork': 'Cómo trabajo',
@@ -56,6 +57,7 @@ export const UI = {
     'notfound.back': 'Volver al inicio',
   },
   en: {
+    'meta.title': 'Frontend engineer and AI engineering',
     'meta.description': 'Senior frontend engineer building AI products: case studies, technical decisions and how I work with agents.',
     'nav.projects': 'Projects',
     'nav.howiwork': 'How I work',

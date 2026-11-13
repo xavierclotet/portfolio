@@ -20,7 +20,7 @@ interface Props {
 const { lang, title, description, altPath, wide = false, current, line } = Astro.props;
 const tr = t(lang);
 const other = otherLang(lang);
-const pageTitle = title ? `${title} · ${SITE.name}` : SITE.name;
+const pageTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · ${tr('meta.title')}`;
 const desc = description ?? tr('meta.description');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const alternate = new URL(altPath ?? homePath(other), Astro.site);

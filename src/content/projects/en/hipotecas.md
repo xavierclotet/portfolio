@@ -7,6 +7,7 @@ ai: [Agentic development]
 privateCode: true
 access: Personal tool, not published
 order: 4
+draft: false
 ---
 
 ## Context
